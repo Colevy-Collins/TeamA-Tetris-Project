@@ -1,9 +1,6 @@
 from src.PygameDelegate import PygameDelegate
 pygame = PygameDelegate()
 
-from src.RandomDelegate import RandomDelegate
-random = RandomDelegate()
-
 NUM_OF_SHAPE_GRID_ROWS = 4
 NUM_OF_SHAPE_GRID_COLUMNS = 4
 ACCOUNT_FOR_NEXT_ROW = 4

@@ -1,5 +1,6 @@
-import pygame
+from src.PygameDelegate import PygameDelegate
 from src.TetrisBoard import TetrisBoard
+pygame = PygameDelegate()
 
 
 def main():   
