@@ -1,18 +1,14 @@
 import pygame
-from src.TetrisBlock import TetrisBlock
-from src.TetrisGame import TetrisGame
 from src.TetrisBoard import TetrisBoard
 
 
 def main():   
 
-    active_block = TetrisBlock()
-    game = TetrisGame()
     board = TetrisBoard()
-
+ 
     # Pygame related init
     pygame.init()
-    screen = pygame.display.set_mode(game.get_window_size())
+    screen = pygame.display.set_mode(board.get_window_size())
     pygame.display.set_caption("Tetris")
     clock = pygame.time.Clock()
 
@@ -24,23 +20,23 @@ def main():
     game_block_height = 20
     game_block_width = 10
 
-    board.initialize_board(game_block_height, game_block_width, game) # code smell - what is 20 and 10? Can we use keyword argument? 
+    board.initialize_board(game_block_height, game_block_width) # code smell - what is 20 and 10? Can we use keyword argument? 
     
     starting_shift_x = 3 
     starting_shift_y = 0
 
-    active_block.create_figure(starting_shift_x, starting_shift_y)
+    board.create_figure(starting_shift_x, starting_shift_y)
     done = False
     level = 1
     interval = 100000
     interval_of_auto_move = 2
 
     event_key_action_list = {
-        pygame.K_UP: lambda: board.rotate_figure(active_block, game),
+        pygame.K_UP: lambda: board.rotate_figure(),
         pygame.K_DOWN: "true",
-        pygame.K_LEFT: lambda: board.move_sideways(-1, active_block, game),
-        pygame.K_RIGHT: lambda: board.move_sideways(1, active_block, game),
-        pygame.K_SPACE: lambda: board.move_to_bottom(active_block, game)
+        pygame.K_LEFT: lambda: board.move_sideways(-1),
+        pygame.K_RIGHT: lambda: board.move_sideways(1),
+        pygame.K_SPACE: lambda: board.move_to_bottom()
     }
 
 
@@ -51,8 +47,8 @@ def main():
             
         # Check if we need to automatically go down
         if counter % (fps // interval_of_auto_move // level) == 0 or pressing_down: 
-            if game.get_game_state() == "start":
-                board.move_down(active_block, game)
+            if board.get_game_state() == "start":
+                board.move_down()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -69,12 +65,12 @@ def main():
             if event.type == pygame.KEYUP and event.key == pygame.K_DOWN:
                 pressing_down = False
                 
-        board.draw_game_board(screen = screen, tetris_game = game)
+        board.draw_game_board(screen = screen)
         
         # code smell - how many values duplication Figures[current_figure_type][current_rotation]
-        board.draw_figure(screen = screen, tetris_block = active_block)
+        board.draw_figure(screen = screen)
 
-        if game.get_game_state() == "gameover":
+        if board.get_game_state() == "gameover":
             done = True
 
         # refresh the screen
