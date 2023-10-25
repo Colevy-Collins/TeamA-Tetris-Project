@@ -1,11 +1,13 @@
 from src.PygameDelegate import PygameDelegate
 from src.TetrisBoard import TetrisBoard
+from src.TetrisBlock import TetrisBlock
 pygame = PygameDelegate()
 
 
 def main():   
 
-    board = TetrisBoard()
+    block = TetrisBlock()
+    board = TetrisBoard(block)
  
     # Pygame related init
     pygame.init()

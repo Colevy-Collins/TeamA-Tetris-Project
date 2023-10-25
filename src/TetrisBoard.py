@@ -1,5 +1,7 @@
 from src.PygameDelegate import PygameDelegate
 pygame = PygameDelegate()
+from src.RandomDelegate import RandomDelegate
+random = RandomDelegate()
 
 NUM_OF_SHAPE_GRID_ROWS = 4
 NUM_OF_SHAPE_GRID_COLUMNS = 4
@@ -21,7 +23,8 @@ GRAY = (128, 128, 128)
 # codesmell - params should be assinged to a var and var used instead of param
 # codesmell - long class
 class TetrisBoard:
-    def __init__(self):
+    def __init__(self, tetris_block):
+        self.tetris_block = tetris_block
         self.size_of_grid_block = 20
         self.start_x_position = 100
         self.start_y_position = 60
@@ -48,12 +51,7 @@ class TetrisBoard:
     def create_figure(self, starting_shift_x, starting_shift_y):
         self.set_shift_in_x(starting_shift_x)
         self.set_shift_in_y(starting_shift_y)
-        start_of_range = 0
-        self.set_current_figure_type(random.randint(start_of_range, len(self.Figures) - 1))
-        self.set_current_figure_color(random.randint(start_of_range, len(COLORS) - 1))
-        default_rotation = 0
-        rotation_identifier = default_rotation
-        self.set_current_rotation(rotation_identifier)
+        self.tetris_block.create_figure()
 
 
     def check_intersection(self):
@@ -83,7 +81,7 @@ class TetrisBoard:
         for current_row in range (NUM_OF_SHAPE_GRID_ROWS) :
             for current_column in range (NUM_OF_SHAPE_GRID_COLUMNS) :
                 if current_row * ACCOUNT_FOR_NEXT_ROW  + current_column in self.get_shape():
-                    game_field[ current_row + self.get_shift_in_y()][ current_column  + self.get_shift_in_x()] = self.get_current_figure_color()
+                    game_field[ current_row + self.get_shift_in_y()][ current_column  + self.get_shift_in_x()] = self.tetris_block.get_current_figure_color()
         self.clear_lines()
         self.create_figure(self.starting_shift_x, self.starting_shift_y) 
         if self.check_intersection():
@@ -132,17 +130,17 @@ class TetrisBoard:
             self.set_shift_in_x(old_x)
 
     def rotate_figure(self):      
-        old_rotation = self.get_current_rotation()
-        self.set_current_rotation((self.get_current_rotation() + 1) % len(self.Figures[self.get_current_figure_type()])) #codesmell
+        old_rotation = self.tetris_block.get_current_rotation()
+        self.tetris_block.set_current_rotation((self.tetris_block.get_current_rotation() + 1) % len(self.Figures[self.tetris_block.get_current_figure_type()])) #codesmell
         if self.check_intersection():
-            self.set_current_rotation(old_rotation)
+            self.tetris_block.set_current_rotation(old_rotation)
 
     def draw_figure(self, screen):
         for current_row in range (NUM_OF_SHAPE_GRID_ROWS) :
             for current_column in range (NUM_OF_SHAPE_GRID_COLUMNS) :
                 p = current_row * ACCOUNT_FOR_NEXT_ROW  +  current_column 
                 if p in self.get_shape():
-                    pygame.draw.rect(screen, COLORS[self.get_current_figure_color()],
+                    pygame.draw.rect(screen, COLORS[self.tetris_block.get_current_figure_color()],
                                     [self.get_start_x_position()  + self.get_size_of_grid_block() * ( current_column  + self.shift_in_x) + 1,
                                     self.get_start_y_position() + self.get_size_of_grid_block() * ( current_row + self.shift_in_y) + 1,
                                     self.get_size_of_grid_block() - 2, self.get_size_of_grid_block() - 2])
@@ -242,7 +240,7 @@ class TetrisBoard:
         self.shift_in_y = value
 
     def get_shape(self):
-        return self.Figures[self.current_figure_type][self.current_rotation]
+        return self.tetris_block.get_shape()
     
         # Getter and setter for window_size
     def get_window_size(self):

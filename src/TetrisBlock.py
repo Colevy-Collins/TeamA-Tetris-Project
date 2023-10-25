@@ -26,15 +26,13 @@ class TetrisBlock:
             [(1, 2, 5, 6)],
         )
 
-    def create_figure(self, starting_shift_x, starting_shift_y):
-        self.shift_in_x(starting_shift_x)
-        self.shift_in_y(starting_shift_y)
+    def create_figure(self):
         start_of_range = 0
-        self.current_figure_type(random.randint(start_of_range, len(self.Figures) - 1))
-        self.current_figure_color(random.randint(start_of_range, len(block_colors) - 1))
+        self.current_figure_type = random.randint(start_of_range, len(self.Figures) - 1)
+        self.current_figure_color =random.randint(start_of_range, len(self.block_colors) - 1) 
         default_rotation = 0
         rotation_identifier = default_rotation
-        self.current_rotation(rotation_identifier)
+        self.current_rotation = rotation_identifier 
 
     def get_current_figure_type(self):
         return self.current_figure_type
@@ -42,6 +40,9 @@ class TetrisBlock:
     def get_current_figure_color(self):
         return self.current_figure_color
 
+    def set_current_rotation(self, value):
+        self.current_rotation = value
+    
     def get_current_rotation(self):
         return self.current_rotation
 
