@@ -55,3 +55,6 @@ class TetrisBlock:
     def get_shape(self):
         return self.Figures[self.current_figure_type][self.current_rotation]
     
+    def get_figure(self):
+        return self.Figures
+    

@@ -52,19 +52,28 @@ class TetrisBoard:
         self.set_shift_in_x(starting_shift_x)
         self.set_shift_in_y(starting_shift_y)
         self.tetris_block.create_figure()
+        if self.check_intersection():
+            self.set_game_state("gameover")
+
 
 
     def check_intersection(self):
         is_intersection = False
         game_field = self.get_game_field()
+        shift_in_x = self.get_shift_in_x()
+        shift_in_y = self.get_shift_in_y()
+        grid_block_height = self.get_grid_block_height()
+        grid_block_width = self.get_grid_block_width()
+        shape = self.get_shape()
+
         for current_row in range (NUM_OF_SHAPE_GRID_ROWS) :
             for current_column in range (NUM_OF_SHAPE_GRID_COLUMNS) :
-                if current_row * ACCOUNT_FOR_NEXT_ROW  + current_column in self.get_shape():
+                if current_row * ACCOUNT_FOR_NEXT_ROW  + current_column in shape:
                     is_emplty = 0
-                    if current_row + self.get_shift_in_y() > self.get_grid_block_height() - 1 or \
-                    current_column + self.get_shift_in_x() > self.get_grid_block_width() - 1 or \
-                    current_column + self.get_shift_in_x() < is_emplty or \
-                    game_field[current_row + self.get_shift_in_y()][ current_column  + self.get_shift_in_x()] > is_emplty:
+                    if current_row + shift_in_y > grid_block_height - 1 or \
+                    current_column + shift_in_x > grid_block_width - 1 or \
+                    current_column + shift_in_x < is_emplty or \
+                    game_field[current_row + shift_in_y][ current_column  + shift_in_x] > is_emplty:
                         is_intersection = True
         return is_intersection
    
@@ -76,86 +85,115 @@ class TetrisBoard:
     # maybe make a board_managment class with freeze, clear, check if filled, delete and all moves (maybe draw_figure)
     def freeze_figure(self):
         game_field = self.get_game_field()
-        self.starting_shift_x = 3
-        self.starting_shift_y = 0
+        shape = self.get_shape()
+        shift_in_x = self.get_shift_in_x()
+        shift_in_y = self.get_shift_in_y()
+        shape_color = self.tetris_block.get_current_figure_color()
+
         for current_row in range (NUM_OF_SHAPE_GRID_ROWS) :
             for current_column in range (NUM_OF_SHAPE_GRID_COLUMNS) :
-                if current_row * ACCOUNT_FOR_NEXT_ROW  + current_column in self.get_shape():
-                    game_field[ current_row + self.get_shift_in_y()][ current_column  + self.get_shift_in_x()] = self.tetris_block.get_current_figure_color()
-        self.clear_lines()
-        self.create_figure(self.starting_shift_x, self.starting_shift_y) 
-        if self.check_intersection():
-            self.set_game_state("gameover")
+                if current_row * ACCOUNT_FOR_NEXT_ROW  + current_column in shape:
+                    game_field[ current_row + shift_in_y][ current_column  + shift_in_x] = shape_color
 
     def clear_lines(self):
+        grid_block_height = self.get_grid_block_height()
         start_of_range = 1
-        for current_row in range(start_of_range, self.get_grid_block_height()):
+    
+        for current_row in range(start_of_range, grid_block_height):
             if self.check_if_row_is_filled(current_row):
                 self.delete_row(current_row)
 
     def check_if_row_is_filled(self, current_row):
-        is_emplty = 0
+        grid_block_width = self.get_grid_block_width()
         game_field = self.get_game_field()
-        for current_column in range(self.get_grid_block_width()):
-            if game_field[ current_row ][ current_column ] == 0:
-                is_emplty += 1
-        return is_emplty == 0
+        is_empty = 0
+        for current_column in range(grid_block_width):
+            if game_field[ current_row ][ current_column ] == is_empty:
+                is_empty += 1
+        return is_empty == 0
             
     def delete_row(self, current_row):
+        game_field = self.get_game_field()
+        grid_block_width = self.get_grid_block_width()
         end_of_range = 1
         size_of_step_through_range = -1
-        game_field = self.get_game_field()
         for current_row_above in range(current_row, end_of_range, size_of_step_through_range):
-            for current_column in range(self.get_grid_block_width()):
+            for current_column in range(grid_block_width):
                 game_field[current_row_above][ current_column ] = game_field[current_row_above - 1][ current_column ]
     # maybe make moves sub classes of a moves class and use poly
+    
+    def game_rules(self):
+        starting_shift_x = 3
+        starting_shift_y = 0  
+        self.freeze_figure()
+        self.create_figure(starting_shift_x, starting_shift_y)
+        self.clear_lines() 
+    
     def move_to_bottom(self):
         
         while not self.check_intersection():
             self.set_shift_in_y(self.get_shift_in_y() + 1)
         self.set_shift_in_y(self.get_shift_in_y() - 1)
-        self.freeze_figure()
+        self.game_rules()
 
     def move_down(self):
-        
         self.set_shift_in_y(self.get_shift_in_y() + 1)
         if self.check_intersection():
             self.set_shift_in_y(self.get_shift_in_y() - 1)
-            self.freeze_figure()
+            self.game_rules()
+
 
     def move_sideways(self, player_change_in_x):
-        old_x = self.get_shift_in_x()
-        self.set_shift_in_x(self.get_shift_in_x() + player_change_in_x)
+        shift_in_x = self.get_shift_in_x()
+
+        self.set_shift_in_x(shift_in_x + player_change_in_x)
         if self.check_intersection():
-            self.set_shift_in_x(old_x)
+            self.set_shift_in_x(shift_in_x)
 
     def rotate_figure(self):      
-        old_rotation = self.tetris_block.get_current_rotation()
-        self.tetris_block.set_current_rotation((self.tetris_block.get_current_rotation() + 1) % len(self.Figures[self.tetris_block.get_current_figure_type()])) #codesmell
+        current_rotation = self.tetris_block.get_current_rotation()
+        figure = self.tetris_block.get_figure() # add geter to tetris block for this.
+        current_figure_type = self.tetris_block.get_current_figure_type()
+        
+        self.tetris_block.set_current_rotation((self.tetris_block.get_current_rotation() + 1) % len(figure[current_figure_type]))
         if self.check_intersection():
-            self.tetris_block.set_current_rotation(old_rotation)
+            self.tetris_block.set_current_rotation((self.tetris_block.get_current_rotation() - 1)  % len(figure[current_figure_type]))
 
     def draw_figure(self, screen):
+        shape = self.get_shape()
+        color = COLORS[self.tetris_block.get_current_figure_color()]
+        start_x_position = self.get_start_x_position()
+        start_y_position = self.get_start_y_position()
+        size_of_grid_block = self.get_size_of_grid_block()
+        shift_in_x = self.get_shift_in_x()
+        shift_in_y = self.get_shift_in_y()
+
         for current_row in range (NUM_OF_SHAPE_GRID_ROWS) :
             for current_column in range (NUM_OF_SHAPE_GRID_COLUMNS) :
-                p = current_row * ACCOUNT_FOR_NEXT_ROW  +  current_column 
-                if p in self.get_shape():
-                    pygame.draw.rect(screen, COLORS[self.tetris_block.get_current_figure_color()],
-                                    [self.get_start_x_position()  + self.get_size_of_grid_block() * ( current_column  + self.shift_in_x) + 1,
-                                    self.get_start_y_position() + self.get_size_of_grid_block() * ( current_row + self.shift_in_y) + 1,
-                                    self.get_size_of_grid_block() - 2, self.get_size_of_grid_block() - 2])
+                position = current_row * ACCOUNT_FOR_NEXT_ROW  +  current_column 
+                if position in shape:
+                    pygame.draw.rect(screen, color,
+                                    [start_x_position  + size_of_grid_block * ( current_column  + shift_in_x) + 1,
+                                    start_y_position + size_of_grid_block * ( current_row + shift_in_y) + 1,
+                                    size_of_grid_block - 2, size_of_grid_block - 2])
 
     # make a class that connects pygame to this one and remove pygame form class
     def draw_game_board(self, screen):
         screen.fill(WHITE)
         game_field = self.get_game_field()
+        grid_block_height = self.get_grid_block_height()
+        grid_block_width = self.get_grid_block_width()
+        start_x_position = self.get_start_x_position()
+        start_y_position = self.get_start_y_position()	
+        size_of_grid_block = self.get_size_of_grid_block()
 
-        for current_row in range(self.get_grid_block_height()):
-            for current_column in range(self.get_grid_block_width()):
-                pygame.draw.rect(screen, GRAY, [self.get_start_x_position() + self.get_size_of_grid_block() *  current_column , self.get_start_y_position() + self.get_size_of_grid_block() * current_row, self.get_size_of_grid_block(), self.get_size_of_grid_block()], 1)
+
+        for current_row in range(grid_block_height):
+            for current_column in range(grid_block_width):
+                pygame.draw.rect(screen, GRAY, [start_x_position + size_of_grid_block *  current_column , start_y_position + size_of_grid_block * current_row, size_of_grid_block, size_of_grid_block], 1)
                 if game_field[ current_row ][ current_column ] > 0:
                     pygame.draw.rect(screen, COLORS[game_field[ current_row ][ current_column ]],
-                                    [self.get_start_x_position() + self.get_size_of_grid_block() * current_column + 1, self.get_start_y_position() + self.get_size_of_grid_block() * current_row + 1, self.get_size_of_grid_block() - 2, self.get_size_of_grid_block() - 1])
+                                    [start_x_position + size_of_grid_block * current_column + 1, start_y_position + size_of_grid_block * current_row + 1, size_of_grid_block - 2, size_of_grid_block - 1])
 
     def initialize_board(self, height, width):
 
@@ -163,9 +201,11 @@ class TetrisBoard:
         self.set_grid_block_width(width)
         self.set_game_field([])
         self.set_game_state("start")
+        grid_block_height = self.get_grid_block_height()
+        grid_block_width = self.get_grid_block_width()
         is_empty = 0
-        for current_row in range(self.get_grid_block_height()):
-            new_line = [ is_empty ] * self.get_grid_block_width() # polymorphism using * 
+        for current_row in range(grid_block_height):
+            new_line = [ is_empty ] * grid_block_width # polymorphism using * 
             self.append_to_game_field(new_line)
 
 
