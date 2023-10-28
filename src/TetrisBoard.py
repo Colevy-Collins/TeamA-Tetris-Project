@@ -17,6 +17,7 @@ class TetrisBoard:
         self.window_size = (400, 500)
         self.game_field = []
         self.colors = (
+            (0, 0, 0), # can not use index 0
             (120, 37, 179),
             (100, 179, 179),
             (80, 34, 22),

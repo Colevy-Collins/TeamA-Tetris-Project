@@ -9,7 +9,8 @@ class TetrisBlock:
         self.shift_in_x = 0
         self.shift_in_y = 0
         self.colors = (
-            (120, 37, 179), #issue color
+            (0, 0, 0), # can not use index 0
+            (120, 37, 179), 
             (100, 179, 179),
             (80, 34, 22),
             (80, 134, 22),
@@ -31,6 +32,7 @@ class TetrisBlock:
         self.shift_in_x = starting_shift_x
         self.shift_in_y = starting_shift_y
         self.current_figure_type = random.randint(start_of_range, len(self.Figures) - 1)
+        start_of_range = 1
         self.current_figure_color =random.randint(start_of_range, len(self.colors) - 1) 
         default_rotation = 0
         rotation_identifier = default_rotation
