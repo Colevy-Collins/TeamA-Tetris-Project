@@ -8,8 +8,8 @@ class TetrisBlock:
         self.current_rotation = 0
         self.shift_in_x = 0
         self.shift_in_y = 0
-        self.block_colors = (
-            (120, 37, 179),
+        self.colors = (
+            (120, 37, 179), #issue color
             (100, 179, 179),
             (80, 34, 22),
             (80, 134, 22),
@@ -31,7 +31,7 @@ class TetrisBlock:
         self.shift_in_x = starting_shift_x
         self.shift_in_y = starting_shift_y
         self.current_figure_type = random.randint(start_of_range, len(self.Figures) - 1)
-        self.current_figure_color =random.randint(start_of_range, len(self.block_colors) - 1) 
+        self.current_figure_color =random.randint(start_of_range, len(self.colors) - 1) 
         default_rotation = 0
         rotation_identifier = default_rotation
         self.current_rotation = rotation_identifier 
@@ -65,4 +65,15 @@ class TetrisBlock:
 
     def set_shift_in_y(self, value):
         self.shift_in_y = value
+
+    # Getter and setter for colors
+    def get_colors(self):
+        return self.colors
+
+    def set_colors(self, value):
+        self.colors = value
+
+    # Method to append to colors
+    def append_to_colors(self, value):
+        self.colors.append(value)
     

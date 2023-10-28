@@ -46,11 +46,7 @@ class BoardManager:
                         is_intersection = True
         return is_intersection
    
-    """The freeze_figure method has a bug where it looks like it is not freezing a figure to the board.
-        This bug does not appear to be consistent, with most figures being frozen as they should.
-        This bug involves the create_figure method. This bug happens when you change create_figure from
-        a global method to either an internal method or a called method. I have not been able to figure out why,
-        but all other functions work. I think it may have to do with the refreshing of the game."""
+    """When a shape is purple, it seems to get deleted"""
     # maybe make a board_managment class with freeze, clear, check if filled, delete and all moves (maybe draw_figure)
     def freeze_figure(self):
         game_field = self.tetris_board.get_game_field()
@@ -102,7 +98,7 @@ class BoardManager:
 
     def draw_figure(self, screen):
         shape = self.get_shape()
-        color = self.tetris_board.get_colors()[self.tetris_block.get_current_figure_color()] # get from board
+        color = self.tetris_block.get_colors()[self.tetris_block.get_current_figure_color()] # get from board
         start_x_position = self.tetris_board.get_start_x_position()
         start_y_position = self.tetris_board.get_start_y_position()
         size_of_grid_block = self.tetris_board.get_size_of_grid_block()
