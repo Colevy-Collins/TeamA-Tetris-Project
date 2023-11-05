@@ -6,6 +6,7 @@ from src.TetrisBoardChecker import BoardChecker
 from src.TetrisStartMenu import TetrisStartMenu
 from src.TetrisEndMenu import EndGameMenu
 from src.TetrisPauseMenu import PausedMenu
+from src.TetrisPauseIcon import PauseButton
 
 
 pygame = PygameDelegate()
@@ -51,7 +52,12 @@ def main():
         pygame.K_RIGHT: lambda: board_manager.move_sideways(1),
         pygame.K_SPACE: lambda: board_manager.move_to_bottom()
     }
-    
+
+    pausebuttonSize = 40
+    pausebuttonLocationX = 10
+    pausebuttonLocationY = 10
+
+    pauseIconButton = PauseButton(screen, (pausebuttonLocationX, pausebuttonLocationY), pausebuttonSize, (255, 255, 255), (0, 0, 0))
     end_game_menu = EndGameMenu()
     menu = TetrisStartMenu()
     menu.initialize()
@@ -61,11 +67,22 @@ def main():
         gameActive = False
 
     while not gameActive:
+
+        keys = pygame.key.get_pressed()
+        #BELOW If P is pressed, Pause menu 
+        if keys[pygame.K_p]:
+            paused_menu = PausedMenu()
+            paused_menu.initialize()
+
+            if paused_menu.menuAction == True:
+                main()
+            if paused_menu.resumeAction == True:
+                clock.tick(fps)
+
         counter += 1
         if counter > interval:
             counter = 0
-        #paused_menu = PausedMenu()
-        #paused_menu.initialize()
+
         # Check if we need to automatically go down
         if counter % (fps // interval_of_auto_move // level) == 0 or pressing_down: 
             if board_manager.get_game_state() == "start":
@@ -81,10 +98,20 @@ def main():
                     method_to_run = event_key_action_list[event.key]
                     if callable(method_to_run):
                         method_to_run()
-                            
-
             if event.type == pygame.KEYUP and event.key == pygame.K_DOWN:
                 pressing_down = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:  # Check for left mouse button click
+                    mouse_x, mouse_y = pygame.mouse.get_pos()
+                    if (pausebuttonLocationX <= mouse_x <= pausebuttonLocationX + pausebuttonSize) and (pausebuttonLocationY <= mouse_y <= pausebuttonLocationY + pausebuttonSize):
+                        # Pause button was clicked, handle the pause action
+                        paused_menu = PausedMenu()
+                        paused_menu.initialize()
+
+                        if paused_menu.menuAction == True:
+                            main()
+                        if paused_menu.resumeAction == True:
+                            clock.tick(fps)
                     
         tetris_board.draw_game_board(screen = screen)
             
@@ -95,6 +122,8 @@ def main():
             gameActive = True
 
         # refresh the screen
+        pauseIconButton.draw()
+
         pygame.display.flip()
         clock.tick(fps)
 

@@ -11,8 +11,13 @@ class PausedMenu(DefaultUI):
         pygame.draw.rect(self.background, (0, 0, 0, 128), (0, 0, self.screen_width, self.screen_height))
 
         # Initialize the menu components
+        self.menuAction = False
+        self.resumeAction = False
+
         self.title_text = "Paused"
-        self.title_x, self.title_y = 100, 100
+        self.title_x = (self.screen_width - self.title_font.size(self.title_text)[0]) // 2
+
+        self.title_y = 100
 
         self.resume_button = Button(self.screen, "Resume", (self.screen_width // 2, self.screen_height // 2 + 50), (100, 40), self.button_font, [self.WHITE, (0, 128, 255), self.BLACK, self.BLACK])
         self.main_menu_button = Button(self.screen, "Main Menu", (self.screen_width // 2, self.screen_height // 2 + 100), (100, 40), self.button_font, [self.WHITE, (0, 128, 255), self.BLACK, self.BLACK])
@@ -26,9 +31,11 @@ class PausedMenu(DefaultUI):
                     if self.resume_button.rect.collidepoint(event.pos):
                         # Handle resume button click
                         self.running = False
+                        self.resumeAction = True
                     elif self.main_menu_button.rect.collidepoint(event.pos):
                         # Handle main menu button click (return to the main menu)
                         self.running = False
+                        self.menuAction = True
 
             # Draw the semi-transparent black background
             self.screen.blit(self.background, (0, 0))
