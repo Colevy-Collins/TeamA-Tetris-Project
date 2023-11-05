@@ -3,21 +3,30 @@ from src.TetrisBoard import TetrisBoard
 from src.TetrisBlock import TetrisBlock
 from src.TetrisBoardManager import BoardManager
 from src.TetrisBoardChecker import BoardChecker
+from src.SoundManager import SoundManager
+from src.HighScoreHandler import HighScoreHandler
 pygame = PygameDelegate()
 
 
-def main():   
+def main():
+    # Pygame init
+    pygame.init()
 
+    # Pygame related init
     tetris_block = TetrisBlock()
     tetris_board = TetrisBoard()
-    board_manager = BoardManager(tetris_block, tetris_board)
-    board_checker = BoardChecker(tetris_board)
- 
-    # Pygame related init
-    pygame.init()
+    sound_manager = SoundManager()
+    high_score_handler = HighScoreHandler('data', 'high_score.txt')
+    board_manager = BoardManager(tetris_block, tetris_board, sound_manager, high_score_handler)
+    board_checker = BoardChecker(tetris_board, sound_manager)
+
+    # Set up the drawing window
     screen = pygame.display.set_mode(board_manager.get_window_size())
     pygame.display.set_caption("Tetris")
     clock = pygame.time.Clock()
+
+    # Play music
+    sound_manager.play_background_music()
 
     # we need pressing_down, fps, and counter to move_down() the Tetris Figure
     fps = 200
@@ -77,6 +86,8 @@ def main():
         board_manager.draw_figure(screen = screen)
         board_checker.clear_lines()
         if board_manager.get_game_state() == "gameover":
+            sound_manager.stop_background_music()
+            sound_manager.play_game_over_sound()
             done = True
 
         # refresh the screen
