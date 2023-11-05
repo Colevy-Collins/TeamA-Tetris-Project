@@ -3,8 +3,12 @@ from src.TetrisBoard import TetrisBoard
 from src.TetrisBlock import TetrisBlock
 from src.TetrisBoardManager import BoardManager
 from src.TetrisBoardChecker import BoardChecker
-pygame = PygameDelegate()
+from src.TetrisStartMenu import TetrisStartMenu
+from src.TetrisEndMenu import EndGameMenu
+from src.TetrisPauseMenu import PausedMenu
 
+
+pygame = PygameDelegate()
 
 def main():   
 
@@ -24,16 +28,18 @@ def main():
     counter = 0
     pressing_down = False
 
+    #Below 2 variables used in application loop
     game_block_height = 20
     game_block_width = 10
-
-    tetris_board.initialize_board(game_block_height, game_block_width) # code smell - what is 20 and 10? Can we use keyword argument? 
     
+    tetris_board.initialize_board(game_block_height, game_block_width)
+
+
     starting_shift_x = 3 
     starting_shift_y = 0
 
     board_manager.create_figure(starting_shift_x, starting_shift_y)
-    done = False
+    gameActive = True
     level = 1
     interval = 100000
     interval_of_auto_move = 2
@@ -45,12 +51,21 @@ def main():
         pygame.K_RIGHT: lambda: board_manager.move_sideways(1),
         pygame.K_SPACE: lambda: board_manager.move_to_bottom()
     }
+    
+    end_game_menu = EndGameMenu()
+    menu = TetrisStartMenu()
+    menu.initialize()
 
-    while not done:
+    if menu.startGameFlag == True:
+        #Below variable when changed to false runs game logic
+        gameActive = False
+
+    while not gameActive:
         counter += 1
         if counter > interval:
             counter = 0
-            
+        paused_menu = PausedMenu()
+        paused_menu.initialize()
         # Check if we need to automatically go down
         if counter % (fps // interval_of_auto_move // level) == 0 or pressing_down: 
             if board_manager.get_game_state() == "start":
@@ -58,7 +73,7 @@ def main():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                done = True
+                gameActive = True
             if event.type == pygame.KEYDOWN:
                 if event.key in event_key_action_list:
                     if event_key_action_list[event.key] == "true":
@@ -66,24 +81,26 @@ def main():
                     method_to_run = event_key_action_list[event.key]
                     if callable(method_to_run):
                         method_to_run()
-                        
+                            
 
             if event.type == pygame.KEYUP and event.key == pygame.K_DOWN:
                 pressing_down = False
-                
+                    
         tetris_board.draw_game_board(screen = screen)
-        
+            
         # code smell - how many values duplication Figures[current_figure_type][current_rotation]
         board_manager.draw_figure(screen = screen)
         board_checker.clear_lines()
         if board_manager.get_game_state() == "gameover":
-            done = True
+            gameActive = True
 
         # refresh the screen
         pygame.display.flip()
         clock.tick(fps)
 
-    pygame.quit()
+    end_game_menu.initialize()
+    main()
+
 
 if __name__ == "__main__":
     main()
