@@ -1,5 +1,6 @@
 import pygame
 from src.TetrisBoard import TetrisBoard
+from src.Button import Button
 
 
 def main():   
@@ -29,6 +30,7 @@ def main():
     done = False
     level = 1
     interval = 100000
+    # Controls how fast auto move occurs
     interval_of_auto_move = 2
 
     event_key_action_list = {
@@ -69,6 +71,7 @@ def main():
         
         # code smell - how many values duplication Figures[current_figure_type][current_rotation]
         board.draw_figure(screen = screen)
+
 
         if board.get_game_state() == "gameover":
             done = True

@@ -4,6 +4,8 @@ pygame = PygameDelegate()
 from src.RandomDelegate import RandomDelegate
 random = RandomDelegate()
 
+from src.Button import Button
+
 NUM_OF_SHAPE_GRID_ROWS = 4
 NUM_OF_SHAPE_GRID_COLUMNS = 4
 ACCOUNT_FOR_NEXT_ROW = 4
@@ -154,6 +156,13 @@ class TetrisBoard:
     def draw_game_board(self, screen):
         screen.fill(WHITE)
         game_field = self.get_game_field()
+
+        # Load & create button images
+        plus_img = pygame.image.load('assets/images/plus.png').convert_alpha()
+        minus_img = pygame.image.load('assets/images/minus.png').convert_alpha()
+        plus_button = Button(200, 300, plus_img, screen)
+
+        plus_button.draw()
 
         for current_row in range(self.get_grid_block_height()):
             for current_column in range(self.get_grid_block_width()):
