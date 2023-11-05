@@ -33,6 +33,11 @@ def main():
     # Controls how fast auto move occurs
     interval_of_auto_move = 2
 
+    def speed_up_game(speed):
+        speed += 2
+    def slow_down_game(speed):
+        speed -= 2
+
     event_key_action_list = {
         pygame.K_UP: lambda: board.rotate_figure(),
         pygame.K_DOWN: "true",
@@ -62,6 +67,12 @@ def main():
                     method_to_run = event_key_action_list[event.key]
                     if callable(method_to_run):
                         method_to_run()
+                #Pressing 1 increases block falling speed
+                if event.key == pygame.K_1:
+                    interval_of_auto_move += 2
+                # Pressing 2 decreases block falling speed. speed will never go down to 0
+                if event.key == pygame.K_2 and interval_of_auto_move > 2:
+                    interval_of_auto_move -= 2
 
 
             if event.type == pygame.KEYUP and event.key == pygame.K_DOWN:

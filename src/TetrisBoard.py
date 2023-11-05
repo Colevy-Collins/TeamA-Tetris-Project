@@ -283,3 +283,4 @@ class TetrisBoard:
     # Method to append to game_field
     def append_to_game_field(self, value):
         self.game_field.append(value)
+
