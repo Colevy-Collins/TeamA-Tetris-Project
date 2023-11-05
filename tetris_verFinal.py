@@ -64,8 +64,8 @@ def main():
         counter += 1
         if counter > interval:
             counter = 0
-        paused_menu = PausedMenu()
-        paused_menu.initialize()
+        #paused_menu = PausedMenu()
+        #paused_menu.initialize()
         # Check if we need to automatically go down
         if counter % (fps // interval_of_auto_move // level) == 0 or pressing_down: 
             if board_manager.get_game_state() == "start":
