@@ -4,6 +4,7 @@ from src.TetrisBoard import TetrisBoard
 from src.TetrisBlock import TetrisBlock
 from src.TetrisBoardManager import BoardManager
 from src.TetrisBoardChecker import BoardChecker
+from src.Difficulty import Difficulty
 pygame = PygameDelegate()
 
 
@@ -38,7 +39,7 @@ def main():
     level = 1
     interval = 100000
     # Controls how fast auto move occurs
-    interval_of_auto_move = 2
+    difficulty = Difficulty.CreateDifficulty()
 
     def speed_up_game(speed):
         speed += 2
@@ -50,7 +51,9 @@ def main():
         pygame.K_DOWN: "true",
         pygame.K_LEFT: lambda: board_manager.move_sideways(-1),
         pygame.K_RIGHT: lambda: board_manager.move_sideways(1),
-        pygame.K_SPACE: lambda: board_manager.move_to_bottom()
+        pygame.K_SPACE: lambda: board_manager.move_to_bottom(),
+        pygame.K_1: lambda: difficulty.increaseFallSpeed(),
+        pygame.K_2: lambda: difficulty.decreaseFallSpeed()
     }
 
     while not done:
@@ -59,7 +62,7 @@ def main():
             counter = 0
             
         # Check if we need to automatically go down
-        if counter % (fps // interval_of_auto_move // level) == 0 or pressing_down: 
+        if counter % (fps // difficulty.getAutoFallSpeed() // level) == 0 or pressing_down:
             if board_manager.get_game_state() == "start":
                 board_manager.move_down()
 
@@ -74,11 +77,11 @@ def main():
                     if callable(method_to_run):
                         method_to_run()
                 #Pressing 1 increases block falling speed
-                if event.key == pygame.K_1:
-                    interval_of_auto_move += 2
-                # Pressing 2 decreases block falling speed. speed will never go down to 0
-                if event.key == pygame.K_2 and interval_of_auto_move > 2:
-                    interval_of_auto_move -= 2
+                # if event.key == pygame.K_1:
+                #     interval_of_auto_move += 2
+                # # Pressing 2 decreases block falling speed. speed will never go down to 0
+                # if event.key == pygame.K_2 and interval_of_auto_move > 2:
+                #     interval_of_auto_move -= 2
 
 
             if event.type == pygame.KEYUP and event.key == pygame.K_DOWN:
