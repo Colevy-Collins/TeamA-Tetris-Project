@@ -4,9 +4,14 @@ from src.TetrisBoard import TetrisBoard
 from src.TetrisBlock import TetrisBlock
 from src.TetrisBoardManager import BoardManager
 from src.TetrisBoardChecker import BoardChecker
+from src.TetrisStartMenu import TetrisStartMenu
+from src.TetrisEndMenu import EndGameMenu
+from src.TetrisPauseMenu import PausedMenu
+from src.TetrisPauseIcon import PauseButton
 from src.Difficulty import Difficulty
-pygame = PygameDelegate()
 
+
+pygame = PygameDelegate()
 
 def main():   
 
@@ -26,25 +31,22 @@ def main():
     counter = 0
     pressing_down = False
 
+    #Below 2 variables used in application loop
     game_block_height = 20
     game_block_width = 10
-
-    tetris_board.initialize_board(game_block_height, game_block_width) # code smell - what is 20 and 10? Can we use keyword argument? 
     
+    tetris_board.initialize_board(game_block_height, game_block_width)
+
+
     starting_shift_x = 3 
     starting_shift_y = 0
 
     board_manager.create_figure(starting_shift_x, starting_shift_y)
-    done = False
+    gameActive = True
     level = 1
     interval = 100000
     # Controls how fast auto move occurs
     difficulty = Difficulty.CreateDifficulty()
-
-    def speed_up_game(speed):
-        speed += 2
-    def slow_down_game(speed):
-        speed -= 2
 
     event_key_action_list = {
         pygame.K_UP: lambda: board_manager.rotate_figure(),
@@ -56,11 +58,36 @@ def main():
         pygame.K_2: lambda: difficulty.decreaseFallSpeed()
     }
 
-    while not done:
+    pausebuttonSize = 40
+    pausebuttonLocationX = 10
+    pausebuttonLocationY = 10
+
+    pauseIconButton = PauseButton(screen, (pausebuttonLocationX, pausebuttonLocationY), pausebuttonSize, (255, 255, 255), (0, 0, 0))
+    end_game_menu = EndGameMenu()
+    menu = TetrisStartMenu()
+    menu.initialize()
+
+    if menu.startGameFlag == True:
+        #Below variable when changed to false runs game logic
+        gameActive = False
+
+    while not gameActive:
+
+        keys = pygame.key.get_pressed()
+        #BELOW If P is pressed, Pause menu 
+        if keys[pygame.K_p]:
+            paused_menu = PausedMenu()
+            paused_menu.initialize()
+
+            if paused_menu.menuAction == True:
+                main()
+            if paused_menu.resumeAction == True:
+                clock.tick(fps)
+
         counter += 1
         if counter > interval:
             counter = 0
-            
+
         # Check if we need to automatically go down
         if counter % (fps // difficulty.getAutoFallSpeed() // level) == 0 or pressing_down:
             if board_manager.get_game_state() == "start":
@@ -68,7 +95,7 @@ def main():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                done = True
+                gameActive = True
             if event.type == pygame.KEYDOWN:
                 if event.key in event_key_action_list:
                     if event_key_action_list[event.key] == "true":
@@ -76,30 +103,38 @@ def main():
                     method_to_run = event_key_action_list[event.key]
                     if callable(method_to_run):
                         method_to_run()
-                #Pressing 1 increases block falling speed
-                # if event.key == pygame.K_1:
-                #     interval_of_auto_move += 2
-                # # Pressing 2 decreases block falling speed. speed will never go down to 0
-                # if event.key == pygame.K_2 and interval_of_auto_move > 2:
-                #     interval_of_auto_move -= 2
-
-
             if event.type == pygame.KEYUP and event.key == pygame.K_DOWN:
                 pressing_down = False
-                
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:  # Check for left mouse button click
+                    mouse_x, mouse_y = pygame.mouse.get_pos()
+                    if (pausebuttonLocationX <= mouse_x <= pausebuttonLocationX + pausebuttonSize) and (pausebuttonLocationY <= mouse_y <= pausebuttonLocationY + pausebuttonSize):
+                        # Pause button was clicked, handle the pause action
+                        paused_menu = PausedMenu()
+                        paused_menu.initialize()
+
+                        if paused_menu.menuAction == True:
+                            main()
+                        if paused_menu.resumeAction == True:
+                            clock.tick(fps)
+                    
         tetris_board.draw_game_board(screen = screen)
-        
+            
         # code smell - how many values duplication Figures[current_figure_type][current_rotation]
         board_manager.draw_figure(screen = screen)
         board_checker.clear_lines()
         if board_manager.get_game_state() == "gameover":
-            done = True
+            gameActive = True
 
         # refresh the screen
+        pauseIconButton.draw()
+
         pygame.display.flip()
         clock.tick(fps)
 
-    pygame.quit()
+    end_game_menu.initialize()
+    main()
+
 
 if __name__ == "__main__":
     main()
