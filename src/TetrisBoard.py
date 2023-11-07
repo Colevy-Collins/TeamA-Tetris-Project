@@ -22,6 +22,7 @@ COLORS = (
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GRAY = (128, 128, 128)
+RED = (255, 0, 0)
 
 # codesmell - params should be assinged to a var and var used instead of param
 # codesmell - long class
@@ -47,7 +48,7 @@ class TetrisBoard:
 
     # make a class that connects pygame to this one and remove pygame form class
     def draw_game_board(self, screen):
-        screen.fill(WHITE)
+        screen.fill(BLACK)
         game_field = self.get_game_field()
         grid_block_height = self.get_grid_block_height()
         grid_block_width = self.get_grid_block_width()
