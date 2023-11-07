@@ -5,7 +5,7 @@ class PauseIconButton(IconButton):
     def __init__(self, screen, position, size, colors):
         super().__init__(screen, position, size, colors)
         
-        self.icon_rects = []
+        self.icon_rects = self.generate_icon()
         self.generate_icon()
 
 
@@ -27,7 +27,7 @@ class PauseIconButton(IconButton):
         line1 = pygame.Rect(line1_x, line_y, icon_width, icon_height)
         line2 = pygame.Rect(line2_x, line_y, icon_width, icon_height)
 
-        self.icon_rects = [line1, line2]
+        return [line1, line2]
 
     def click_action(self):
         pass
