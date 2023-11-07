@@ -8,7 +8,7 @@ class UIButton(Button):
         self.font = font
 
         # Create the button's rectangle
-        self.rect = pygame.Rect(self.position[0] - self.size[0] // 2, self.position[1] - self.size[1] // 2, self.size[0], self.size[1])
+        self.rect = pygame.Rect(self.position[0], self.position[1], self.size[0], self.size[1])
 
     def draw(self):
         # Create the button background and border

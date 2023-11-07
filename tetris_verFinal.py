@@ -52,12 +52,11 @@ def main():
         pygame.K_RIGHT: lambda: board_manager.move_sideways(1),
         pygame.K_SPACE: lambda: board_manager.move_to_bottom()
     }
-
-    pausebuttonSize = 40
+    sizeValues = [40, 40, 40]
     pausebuttonLocationX = 10
     pausebuttonLocationY = 10
 
-    pauseIconButton = PauseIconButton(screen, (pausebuttonLocationX, pausebuttonLocationY), pausebuttonSize, [(0, 0, 0 ), (255, 0, 0)])
+    pauseIconButton = PauseIconButton(screen, (pausebuttonLocationX, pausebuttonLocationY), sizeValues, [(150, 150, 150 ), (255, 255, 255)])
     end_game_menu = EndGameMenu()
     menu = TetrisStartMenu()
     menu.initialize()

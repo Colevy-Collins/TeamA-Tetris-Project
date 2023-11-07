@@ -16,9 +16,9 @@ class Button:
 
     def hoverCheck(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
-        button_x, button_y, button_width, button_height = self.position[0] - self.size[0] // 2, self.position[1] - self.size[1] // 2, self.size[0], self.size[1]        
+        button_x, button_y, button_width, button_height = self.position[0], self.position[1], self.size[0], self.size[1]        
         if (button_x <= mouse_x <= button_x + button_width) and (button_y <= mouse_y <= button_y + button_height):
-            
+         
             return self.darken_color()
         else:
             return self.colors

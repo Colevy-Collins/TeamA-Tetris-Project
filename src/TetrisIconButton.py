@@ -10,9 +10,9 @@ class IconButton(Button):
 
     def draw(self, icon_rects):
         # Draw the button background
-        pygame.draw.rect(self.screen, self.colors[1], (self.position[0], self.position[1], self.size, self.size), 100, 25)
+        pygame.draw.rect(self.screen, self.hoverCheck()[0], (self.position[0], self.position[1], self.size[0], self.size[1]), 100, 25)
 
         # Draw the pause icon (two vertical lines)
         for icon in icon_rects:
-            pygame.draw.rect(self.screen, self.colors[1], icon, 40,)
+            pygame.draw.rect(self.screen, self.hoverCheck()[1], icon, self.size[2])
 

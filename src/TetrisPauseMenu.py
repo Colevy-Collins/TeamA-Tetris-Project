@@ -19,8 +19,9 @@ class PausedMenu(DefaultUI):
 
         self.title_y = 100
 
-        self.resume_button = UIButton(self.screen, "Resume", (self.screen_width // 2, self.screen_height // 2 + 50), (100, 40), self.button_font, [self.WHITE, self.BLACK])
-        self.main_menu_button = UIButton(self.screen, "Main Menu", (self.screen_width // 2, self.screen_height // 2 + 100), (100, 40), self.button_font, [self.WHITE, self.BLACK])
+        buttonWidth = 100
+        self.resume_button = UIButton(self.screen, "Resume", (self.screen_width // 2 - (buttonWidth // 2), self.screen_height // 2), (buttonWidth, 40), self.button_font, [self.WHITE, self.BLACK])
+        self.main_menu_button = UIButton(self.screen, "Main Menu", (self.screen_width // 2 - (buttonWidth // 2), self.screen_height // 2 + 50), (buttonWidth, 40), self.button_font, [self.WHITE, self.BLACK])
 
     def initialize(self):
         while self.running:
