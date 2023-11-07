@@ -16,9 +16,9 @@ def main():
     tetris_block = TetrisBlock()
     tetris_board = TetrisBoard()
     sound_manager = SoundManager()
-    high_score_handler = HighScoreHandler('data', 'high_score.txt')
+    high_score_handler = HighScoreHandler('src/data', 'high_score.txt')
     board_manager = BoardManager(tetris_block, tetris_board, sound_manager, high_score_handler)
-    board_checker = BoardChecker(tetris_board, sound_manager)
+    board_checker = BoardChecker(tetris_board, board_manager, sound_manager)
 
     # Set up the drawing window
     screen = pygame.display.set_mode(board_manager.get_window_size())
@@ -67,6 +67,7 @@ def main():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                # board_manager.save_high_score()
                 done = True
             if event.type == pygame.KEYDOWN:
                 if event.key in event_key_action_list:
@@ -85,6 +86,8 @@ def main():
         # code smell - how many values duplication Figures[current_figure_type][current_rotation]
         board_manager.draw_figure(screen = screen)
         board_checker.clear_lines()
+        board_manager.draw_score(screen = screen)
+        board_manager.draw_high_score(screen = screen)
         if board_manager.get_game_state() == "gameover":
             sound_manager.stop_background_music()
             sound_manager.play_game_over_sound()
@@ -94,6 +97,7 @@ def main():
         pygame.display.flip()
         clock.tick(fps)
 
+    board_manager.save_high_score()
     pygame.quit()
 
 if __name__ == "__main__":

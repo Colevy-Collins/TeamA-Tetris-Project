@@ -8,7 +8,7 @@ class DataHandler:
     
     def write_data(self, data):
         with open(self.file_path, 'w') as file:
-            file.write(data)
+            file.write(str(data))
     
     def read_data(self):
         try:

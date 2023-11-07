@@ -123,6 +123,16 @@ class BoardManager:
                                     start_y_position + size_of_grid_block * ( current_row + shift_in_y) + 1,
                                     size_of_grid_block - 2, size_of_grid_block - 2])
  
+    def draw_score(self, screen):
+        font = pygame.font.SysFont('Calibri', 25, True, False)
+        text = font.render("Score: " + str(self.score), True, BLACK)
+        screen.blit(text, [0, 0])
+
+    def draw_high_score(self, screen):
+        font = pygame.font.SysFont('Calibri', 25, True, False)
+        text = font.render("High Score: " + str(self.high_score), True, BLACK)
+        screen.blit(text, [0, 30])
+
 
     def get_shape(self):
         return self.tetris_block.get_shape()
@@ -143,3 +153,23 @@ class BoardManager:
             self.game_state = value
         else:
             self.game_state = "gameover"
+
+    def get_score(self):
+        return self.score
+    
+    def set_score(self, value):
+        self.score = value
+
+    def increase_score(self):
+        self.score += 2
+        if self.score > self.high_score:
+            self.high_score = self.score
+
+    def get_high_score(self):
+        return self.high_score
+    
+    def set_high_score(self, value):
+        self.high_score = value
+
+    def save_high_score(self):
+        self.high_score_handler.write_data(self.high_score)
