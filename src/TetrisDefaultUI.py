@@ -12,6 +12,7 @@ class DefaultUI:
         self.GREEN = (0, 255, 0)
         self.BLUE = (0, 0, 255)
         self.BLACK = (0, 0, 0)
+        self.GREY = (150,150,150)
 
         self.startGameFlag = False
 
@@ -33,8 +34,6 @@ class DefaultUI:
         self.title_text = "TETRIS"
         self.title_colors = [self.RED, self.GREEN, self.BLUE, self.RED, self.GREEN, self.BLUE]  # Example colors for each letter
         self.title_x, self.title_y = 100, 100
-
-        self.start_button = Button(self.screen, "Start", (self.screen_width // 2, self.screen_height // 2 + 50), (100, 40), self.button_font, [self.WHITE, (0, 128, 255), self.BLACK, self.BLACK])
 
         self.running = True
 

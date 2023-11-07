@@ -1,6 +1,6 @@
 import pygame
 import sys
-from src.TetrisUIButton import Button
+from src.TetrisUIButton import UIButton
 from src.TetrisDefaultUI import DefaultUI
 
 class EndGameMenu(DefaultUI):
@@ -17,8 +17,8 @@ class EndGameMenu(DefaultUI):
         self.title_text = "Game Over"
         self.title_x, self.title_y = 100, 100
 
-        self.quit_button = Button(self.screen, "Quit", (self.screen_width // 2, self.screen_height // 2 + 50), (100, 40), self.button_font, [self.WHITE, (255, 0, 0), self.BLACK, self.BLACK])
-        self.main_menu_button = Button(self.screen, "Main Menu", (self.screen_width // 2, self.screen_height // 2 + 100), (100, 40), self.button_font, [self.WHITE, (0, 128, 255), self.BLACK, self.BLACK])
+        self.quit_button = UIButton(self.screen, "Quit", (self.screen_width // 2, self.screen_height // 2 + 50), (100, 40), self.button_font, [self.WHITE, self.BLACK])
+        self.main_menu_button = UIButton(self.screen, "Main Menu", (self.screen_width // 2, self.screen_height // 2 + 100), (100, 40), self.button_font, [self.WHITE, self.BLACK])
 
     def initialize(self):
         while self.running:

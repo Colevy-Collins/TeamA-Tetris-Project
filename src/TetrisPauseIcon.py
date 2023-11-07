@@ -1,17 +1,16 @@
 import pygame
+from src.TetrisIconButton import IconButton
 
-class PauseButton:
-    def __init__(self, screen, position, size, icon_color, background_color):
-        self.screen = screen
-        self.position = position
-        self.size = size
-        self.normal_icon_color = icon_color
-        self.hover_icon_color = (191, 191, 191)
-        self.normal_rect_color = background_color
-        self.hover_rect_color = (75, 75, 75)
+class PauseIconButton(IconButton):
+    def __init__(self, screen, position, size, colors):
+        super().__init__(screen, position, size, colors)
+        
         self.icon_rects = []
-
         self.generate_icon()
+
+
+    def initialize(self):
+        self.draw(self.icon_rects)
 
     def generate_icon(self):
         # Define the geometry of the pause icon
@@ -30,19 +29,7 @@ class PauseButton:
 
         self.icon_rects = [line1, line2]
 
-    def draw(self):
-    # Check if the mouse is hovering over the button
-        mouse_x, mouse_y = pygame.mouse.get_pos()
-        is_hovered = (self.position[0] <= mouse_x <= self.position[0] + self.size) and (self.position[1] <= mouse_y <= self.position[1] + self.size)
+    def click_action(self):
+        pass
 
-        # Use the appropriate colors based on hover state
-        rect_color = self.hover_rect_color if is_hovered else self.normal_rect_color
-        icon_color = self.hover_icon_color if is_hovered else self.normal_icon_color
-
-        # Draw the button background
-        pygame.draw.rect(self.screen, rect_color, (self.position[0], self.position[1], self.size, self.size), 100, 25)
-
-        # Draw the pause icon (two vertical lines)
-        for icon_rect in self.icon_rects:
-            pygame.draw.rect(self.screen, icon_color, icon_rect)
-
+    
