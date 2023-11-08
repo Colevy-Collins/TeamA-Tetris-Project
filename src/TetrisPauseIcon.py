@@ -1,5 +1,7 @@
 import pygame
 from src.TetrisIconButton import IconButton
+from src.TetrisPauseMenu import PausedMenu
+
 
 class PauseIconButton(IconButton):
     def __init__(self, screen, position, size, colors):
@@ -7,7 +9,7 @@ class PauseIconButton(IconButton):
 
         self.icon_rects = self.generate_icon()
         self.generate_icon()
-
+        self.pauseMenuDecision = False
 
     def initialize(self):
         self.draw(self.icon_rects)
@@ -28,8 +30,24 @@ class PauseIconButton(IconButton):
         line2 = pygame.Rect(line2_x, line_y, icon_width, icon_height)
 
         return [line1, line2]
+    
 
-    def click_action(self):
-        pass
+    def clickAction(self, events): 
+        #click_events = [event for event in events if event.type == pygame.MOUSEBUTTONDOWN]
 
+        if self.clickCheck(events):
+            paused_menu = PausedMenu()
+            paused_menu.initialize()
+            self.pauseMenuDecision = paused_menu.menuAction
+
+            return self.pauseMenuDecision
+        return self.pauseMenuDecision
+    
+    def keyAction(self, keys):
+        #BELOW If P is pressed, Pause menu 
+        if keys[pygame.K_p]:
+            paused_menu = PausedMenu()
+            paused_menu.initialize()
+            return self.pauseMenuDecision
+        return self.pauseMenuDecision
     

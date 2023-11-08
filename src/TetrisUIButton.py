@@ -1,4 +1,5 @@
 import pygame
+import sys
 from src.TetrisButton import Button
 
 class UIButton(Button):
@@ -12,23 +13,19 @@ class UIButton(Button):
 
     def draw(self):
         # Create the button background and border
-        pygame.draw.rect(self.screen, super().hoverCheck()[1], self.rect, 0)
+        pygame.draw.rect(self.screen, super().currentColor()[1], self.rect, 0)
 
         # Create the button text
-        text_surface, text_rect = self.create_text_surface(self.text, self.font, super().hoverCheck()[0])
+        text_surface, text_rect = self.create_text_surface(self.text, self.font, super().currentColor()[0])
         text_rect.center = self.rect.center
         self.screen.blit(text_surface, text_rect)
 
     def create_text_surface(self, text, font, color):
         text_surface = font.render(text, True, color)
         return text_surface, text_surface.get_rect()
-    
-    def click_action(self):
-        for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    if self.rect.collidepoint(event.pos):
-                        return True
+
+
+      
+        
                     
 

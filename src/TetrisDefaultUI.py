@@ -12,7 +12,8 @@ class DefaultUI:
         self.GREEN = (0, 255, 0)
         self.BLUE = (0, 0, 255)
         self.BLACK = (0, 0, 0)
-        self.GREY = (150,150,150)
+        self.GREY = (100,100,100)
+
 
         self.startGameFlag = False
 
@@ -40,3 +41,6 @@ class DefaultUI:
     def create_text_surface(self, text, font, color):
         text_surface = font.render(text, True, color)
         return text_surface, text_surface.get_rect()
+    
+    def draw(self):
+        pass

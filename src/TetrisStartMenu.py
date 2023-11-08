@@ -11,18 +11,24 @@ class TetrisStartMenu(DefaultUI):
         self.start_button = UIButton(self.screen, "Start", (self.screen_width // 2 - (buttonWidth // 2) , self.screen_height // 2 + 50), (buttonWidth, 40), self.button_font, [self.WHITE, self.GREY])
         self.quit_button = UIButton(self.screen, "Quit", (self.screen_width // 2 - (buttonWidth // 2) , self.screen_height // 2 + 115), (buttonWidth, 40), self.button_font, [self.WHITE, self.GREY])
 
+
     def initialize(self):
         while self.running:
-            self.start_button.hoverCheck()
-            self.quit_button.hoverCheck()
-
-            if self.start_button.click_action():
+            events = pygame.event.get()
+            for event in events:
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+            
+            if self.start_button.clickCheck(events):
                 self.startGameFlag = True
                 self.running = False
-            if self.quit_button.click_action():
-                print("quit")
+
+            if self.quit_button.clickCheck(events):
+                self.running = False
                 pygame.quit()
                 sys.exit()
+
 
             # Draw the Tetris background
             self.screen.blit(self.background, (0, 0))
@@ -40,4 +46,8 @@ class TetrisStartMenu(DefaultUI):
             # Draw buttons
             self.start_button.draw()
             self.quit_button.draw()
+
+
             pygame.display.flip()
+
+            
