@@ -1,5 +1,1 @@
-200
-
-
-
-
+startGameFlag
