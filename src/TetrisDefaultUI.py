@@ -19,9 +19,6 @@ class DefaultUI:
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         pygame.display.set_caption("Tetris")
 
-        # Set Background
-        self.screen.blit(self.background, (0, 0))
-
         # Fonts
         self.title_font = pygame.font.Font(None, 50)
         self.button_font = pygame.font.Font(None, 37)

@@ -28,7 +28,8 @@ class TetrisStartMenu(DefaultUI):
             # Draw the Tetris background
             self.background = pygame.image.load('src/background.png')
             self.background = pygame.transform.scale(self.background, (self.screen_width, self.screen_height))
-
+            self.screen.blit(self.background, (0, 0))
+                             
             # Draw Buttons and Title
             self.drawButton()
             self.drawTitle()

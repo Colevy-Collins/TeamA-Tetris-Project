@@ -33,8 +33,6 @@ class PauseIconButton(IconButton):
     
 
     def clickAction(self, events): 
-        #click_events = [event for event in events if event.type == pygame.MOUSEBUTTONDOWN]
-
         if self.clickCheck(events):
             paused_menu = PausedMenu()
             paused_menu.initialize()
@@ -48,6 +46,7 @@ class PauseIconButton(IconButton):
         if keys[pygame.K_p]:
             paused_menu = PausedMenu()
             paused_menu.initialize()
+            self.pauseMenuDecision = paused_menu.menuAction
             return self.pauseMenuDecision
         return self.pauseMenuDecision
     

@@ -88,8 +88,10 @@ def main():
             #Pause Button code
             if pauseIconButton.clickAction(event):
                 main()
+            # PUT ICON BUTTON clickAction here!
+            # . . .
+
             
-                    
         tetris_board.draw_game_board(screen = screen)
         board_manager.draw_figure(screen = screen)
         board_checker.clear_lines()
@@ -97,16 +99,14 @@ def main():
             gameActive = True
         
     # PUT ICON BUTTONS HERE!
-        #Pause Logic
+        # Pause Logic
         pauseIconButton.initialize()
         if pauseIconButton.keyAction(pygame.key.get_pressed()):
             main()
-        #Example Logic
+        # Add more button logic here
+        # . . .
 
-
-        
-
-        # refresh the screen
+        # Refresh the screen
         pygame.display.flip()
         clock.tick(fps)
 
