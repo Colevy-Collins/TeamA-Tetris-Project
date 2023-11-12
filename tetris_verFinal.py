@@ -141,6 +141,7 @@ def main():
                         newColor = themes.returnNextColor()
                         tetris_block.set_colors(newColor)
                         tetris_board.set_colors(newColor)
+                        themeButton.changeText(themes.findColorName(newColor))
 
                     
         tetris_board.draw_game_board(screen = screen)
