@@ -20,15 +20,42 @@ class Themes:
             (168, 131, 50),
             (168, 50, 50),
         )
-        self.spring = ()
-        self.summer = ()
-        self.winter = ()
+        self.spring = (
+            (154, 255, 3),  # can not use index 0
+            (87, 194, 0),
+            (117, 255, 122),
+            (62, 214, 105),
+            (133, 255, 184),
+            (2, 232, 171),
+            (92, 255, 255),
+        )
+        self.summer = (
+            (240, 126, 5),  # can not use index 0
+            (189, 97, 0),
+            (252, 160, 0),
+            (255, 181, 51),
+            (252, 215, 91),
+            (250, 229, 5),
+            (250, 111, 5),
+        )
+        self.winter = (
+            (171, 255, 238),  # can not use index 0
+            (2, 217, 167),
+            (5, 162, 252),
+            (39, 129, 171),
+            (189, 252, 248),
+            (161, 202, 255),
+            (134, 161, 252),
+        )
         self.BLACK = (0, 0, 0)
         self.WHITE = (255, 255, 255)
         self.GRAY = (89, 89, 89)
         self.allColors = {
-            "fall": self.fall,
-            "default": self.default
+            "Fall": self.fall,
+            "Spring": self.spring,
+            "Summer": self.summer,
+            "Winter": self.winter,
+            "Default": self.default
         }
         self.colorPosition = -1
 
