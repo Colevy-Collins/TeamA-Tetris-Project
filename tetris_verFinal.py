@@ -9,11 +9,12 @@ from src.TetrisEndMenu import EndGameMenu
 from src.TetrisPauseMenu import PausedMenu
 from src.TetrisPauseIcon import PauseButton
 from src.Difficulty import Difficulty
-from src.TetrisUIButton import TextButton
+#from src.TetrisUIButton import TextButton
 from src.Themes import Themes
 from src.SoundManager import SoundManager
 from src.HighScoreHandler import HighScoreHandler
 
+from src.TetrisPauseIcon import PauseIconButton
 
 pygame = PygameDelegate()
 
@@ -88,30 +89,20 @@ def main():
     themeButton = TextButton(screen, "Theme", (themeButtonLocationX, themeButtonLocationY), (80, 30), pygame.font.Font(None, 20), [WHITE, (0, 128, 255), themes.getGray(), themes.getGray()])
 
 
+    sizeValues = [40, 40, 40] # button sizeX, button sizeY, Icon Size
+    pausebuttonLocationX = 10
+    pausebuttonLocationY = 10
+    
+    pauseIconButton = PauseIconButton(screen, (pausebuttonLocationX, pausebuttonLocationY), sizeValues, [(150, 150, 150 ), (255, 255, 255)])
+    darkModeButton = 
     end_game_menu = EndGameMenu()
     menu = TetrisStartMenu()
     menu.initialize()
 
     if menu.startGameFlag == True:
-        #Below variable when changed to false runs game logic
         gameActive = False
 
     while not gameActive:
-        speedText = "Speed: " + str(difficulty.getAutoFallSpeed())
-        speedButton = TextButton(screen, speedText, (speedButtonLocationX, speedButtonLocationY), (80, 30),
-                                 pygame.font.Font(None, 18),
-                                 [themes.getBlue(), (0, 128, 255), tetris_board.get_board_color(), tetris_board.get_board_color()])
-        keys = pygame.key.get_pressed()
-        #BELOW If P is pressed, Pause menu 
-        if keys[pygame.K_p]:
-            paused_menu = PausedMenu()
-            paused_menu.initialize()
-
-            if paused_menu.menuAction == True:
-                main()
-            if paused_menu.resumeAction == True:
-                clock.tick(fps)
-
         counter += 1
         if counter > interval:
             counter = 0
@@ -133,38 +124,14 @@ def main():
                         method_to_run()
             if event.type == pygame.KEYUP and event.key == pygame.K_DOWN:
                 pressing_down = False
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:  # Check for left mouse button click
-                    mouse_x, mouse_y = pygame.mouse.get_pos()
-                    if (pausebuttonLocationX <= mouse_x <= pausebuttonLocationX + pausebuttonSize) and (pausebuttonLocationY <= mouse_y <= pausebuttonLocationY + pausebuttonSize):
-                        # Pause button was clicked, handle the pause action
-                        paused_menu = PausedMenu()
-                        paused_menu.initialize()
-                        if paused_menu.menuAction == True:
-                            main()
-                        if paused_menu.resumeAction == True:
-                            clock.tick(fps)
-                    if darkModeButton.rect.collidepoint(event.pos):
-                        # Handle button click (for example, start the game)
-                        if tetris_board.get_board_color() is WHITE:
-                            tetris_board.set_board_color(BLACK)
-                            darkModeButton.changeText("Light")
-                        else:
-                            tetris_board.set_board_color(WHITE)
-                            darkModeButton.changeText("Dark")
-                    if themeButton.rect.collidepoint(event.pos):
-                        # Handle button click (for example, start the game)
-                        newColor = themes.returnNextColor()
-                        tetris_block.set_colors(newColor)
-                        tetris_board.set_colors(newColor)
-                        themeButton.changeText(themes.findColorName(newColor))
-                    if speedButton.rect.collidepoint(event.pos):
-                        difficulty.increaseFallSpeed()
+            #Pause Button code
+            if pauseIconButton.clickAction(event):
+                main()
+            # PUT ICON BUTTON clickAction here!
+            # . . .
 
-                    
-        tetris_board.draw_game_board(screen = screen)
             
-        # code smell - how many values duplication Figures[current_figure_type][current_rotation]
+        tetris_board.draw_game_board(screen = screen)
         board_manager.draw_figure(screen = screen)
         board_checker.clear_lines()
         if board_manager.get_game_state() == "gameover":
@@ -172,13 +139,16 @@ def main():
             sound_manager.stop_background_music()
             sound_manager.play_game_over_sound()
             done = True
+        
+    # PUT ICON BUTTONS HERE!
+        # Pause Logic
+        pauseIconButton.initialize()
+        if pauseIconButton.keyAction(pygame.key.get_pressed()):
+            main()
+        # Add more button logic here
+        # . . .
 
-        # refresh the screen
-        pauseIconButton.draw()
-        darkModeButton.draw()
-        themeButton.draw()
-        speedButton.draw()
-
+        # Refresh the screen
         pygame.display.flip()
         clock.tick(fps)
 
