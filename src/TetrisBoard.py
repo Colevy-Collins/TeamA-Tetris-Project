@@ -44,18 +44,18 @@ class TetrisBoard:
             (180, 34, 22),
             (180, 34, 122),
         )
+        self.board_color = WHITE
 
 
     # make a class that connects pygame to this one and remove pygame form class
     def draw_game_board(self, screen):
-        screen.fill(BLACK)
+        screen.fill(self.board_color)
         game_field = self.get_game_field()
         grid_block_height = self.get_grid_block_height()
         grid_block_width = self.get_grid_block_width()
         start_x_position = self.get_start_x_position()
         start_y_position = self.get_start_y_position()	
         size_of_grid_block = self.get_size_of_grid_block()
-
 
         for current_row in range(grid_block_height):
             for current_column in range(grid_block_width):
@@ -137,6 +137,10 @@ class TetrisBoard:
     def set_colors(self, value):
         self.colors = value
 
+    def set_board_color(self, value):
+        self.board_color = value
+    def get_board_color(self):
+        return self.board_color
     # Method to append to colors
     def append_to_colors(self, value):
         self.colors.append(value)

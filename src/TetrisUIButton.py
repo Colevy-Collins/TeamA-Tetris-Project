@@ -1,6 +1,6 @@
 import pygame
 
-class Button:
+class TextButton:
     def __init__(self, screen, text, position, size, font, colors):
         self.screen = screen
         self.text = text
@@ -33,3 +33,6 @@ class Button:
     def create_text_surface(self, text, font, color):
         text_surface = font.render(text, True, color)
         return text_surface, text_surface.get_rect()
+
+    def changeText(self, newText):
+        self.text = newText

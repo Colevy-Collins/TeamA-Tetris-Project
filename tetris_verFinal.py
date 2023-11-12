@@ -9,11 +9,16 @@ from src.TetrisEndMenu import EndGameMenu
 from src.TetrisPauseMenu import PausedMenu
 from src.TetrisPauseIcon import PauseButton
 from src.Difficulty import Difficulty
+from src.TetrisUIButton import TextButton
+from src.Themes import Themes
 
 
 pygame = PygameDelegate()
 
-def main():   
+def main():
+    BLACK = (0, 0, 0)
+    WHITE = (255, 255, 255)
+    themes = Themes()
 
     tetris_block = TetrisBlock()
     tetris_board = TetrisBoard()
@@ -58,11 +63,19 @@ def main():
         pygame.K_2: lambda: difficulty.decreaseFallSpeed()
     }
 
+    #Button initialization
     pausebuttonSize = 40
     pausebuttonLocationX = 10
     pausebuttonLocationY = 10
+    darkModeButtonLocationX = 40
+    darkModeButtonLocationY = 100
+    themeButtonLocationX = 40
+    themeButtonLocationY = 160
 
     pauseIconButton = PauseButton(screen, (pausebuttonLocationX, pausebuttonLocationY), pausebuttonSize, (255, 255, 255), (0, 0, 0))
+    darkModeButton = TextButton(screen, "Dark", (darkModeButtonLocationX, darkModeButtonLocationY), (100, 30), pygame.font.Font(None, 24), [WHITE, (0, 128, 255), BLACK, BLACK])
+    themeButton = TextButton(screen, "Theme", (themeButtonLocationX, themeButtonLocationY), (100, 30), pygame.font.Font(None, 24), [WHITE, (0, 128, 255), BLACK, BLACK])
+
     end_game_menu = EndGameMenu()
     menu = TetrisStartMenu()
     menu.initialize()
@@ -72,7 +85,6 @@ def main():
         gameActive = False
 
     while not gameActive:
-
         keys = pygame.key.get_pressed()
         #BELOW If P is pressed, Pause menu 
         if keys[pygame.K_p]:
@@ -112,11 +124,24 @@ def main():
                         # Pause button was clicked, handle the pause action
                         paused_menu = PausedMenu()
                         paused_menu.initialize()
-
                         if paused_menu.menuAction == True:
                             main()
                         if paused_menu.resumeAction == True:
                             clock.tick(fps)
+                    if darkModeButton.rect.collidepoint(event.pos):
+                        # Handle button click (for example, start the game)
+                        if tetris_board.get_board_color() is WHITE:
+                            tetris_board.set_board_color(BLACK)
+                            darkModeButton.changeText("Light")
+                        else:
+                            tetris_board.set_board_color(WHITE)
+                            darkModeButton.changeText("Dark")
+                    if themeButton.rect.collidepoint(event.pos):
+                        # Handle button click (for example, start the game)
+                        newColor = themes.returnNextColor()
+                        tetris_block.set_colors(newColor)
+                        tetris_board.set_colors(newColor)
+
                     
         tetris_board.draw_game_board(screen = screen)
             
@@ -128,6 +153,8 @@ def main():
 
         # refresh the screen
         pauseIconButton.draw()
+        darkModeButton.draw()
+        themeButton.draw()
 
         pygame.display.flip()
         clock.tick(fps)

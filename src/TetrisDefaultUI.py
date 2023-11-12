@@ -1,5 +1,5 @@
 import pygame
-from src.TetrisUIButton import Button
+from src.TetrisUIButton import TextButton
  
 
 class DefaultUI:
@@ -34,7 +34,7 @@ class DefaultUI:
         self.title_colors = [self.RED, self.GREEN, self.BLUE, self.RED, self.GREEN, self.BLUE]  # Example colors for each letter
         self.title_x, self.title_y = 100, 100
 
-        self.start_button = Button(self.screen, "Start", (self.screen_width // 2, self.screen_height // 2 + 50), (100, 40), self.button_font, [self.WHITE, (0, 128, 255), self.BLACK, self.BLACK])
+        self.start_button = TextButton(self.screen, "Start", (self.screen_width // 2, self.screen_height // 2 + 50), (100, 40), self.button_font, [self.WHITE, (0, 128, 255), self.BLACK, self.BLACK])
 
         self.running = True
 

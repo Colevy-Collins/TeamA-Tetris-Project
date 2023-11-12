@@ -1,5 +1,5 @@
 import pygame
-from src.TetrisUIButton import Button
+from src.TetrisUIButton import TextButton
 from src.TetrisDefaultUI import DefaultUI
 
 class PausedMenu(DefaultUI):
@@ -19,8 +19,8 @@ class PausedMenu(DefaultUI):
 
         self.title_y = 100
 
-        self.resume_button = Button(self.screen, "Resume", (self.screen_width // 2, self.screen_height // 2 + 50), (100, 40), self.button_font, [self.WHITE, (0, 128, 255), self.BLACK, self.BLACK])
-        self.main_menu_button = Button(self.screen, "Main Menu", (self.screen_width // 2, self.screen_height // 2 + 100), (100, 40), self.button_font, [self.WHITE, (0, 128, 255), self.BLACK, self.BLACK])
+        self.resume_button = TextButton(self.screen, "Resume", (self.screen_width // 2, self.screen_height // 2 + 50), (100, 40), self.button_font, [self.WHITE, (0, 128, 255), self.BLACK, self.BLACK])
+        self.main_menu_button = TextButton(self.screen, "Main Menu", (self.screen_width // 2, self.screen_height // 2 + 100), (100, 40), self.button_font, [self.WHITE, (0, 128, 255), self.BLACK, self.BLACK])
 
     def initialize(self):
         while self.running:
