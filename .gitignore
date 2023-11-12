@@ -2,3 +2,4 @@ tetris_env/
 .idea/
 readme.txt
 ./src/__pycache__/
+*.pyc
