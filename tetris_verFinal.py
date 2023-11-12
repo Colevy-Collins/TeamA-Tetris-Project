@@ -50,6 +50,7 @@ def main():
     gameActive = True
     level = 1
     interval = 100000
+
     # Controls how fast auto move occurs
     difficulty = Difficulty.CreateDifficulty()
 
@@ -63,18 +64,21 @@ def main():
         pygame.K_2: lambda: difficulty.decreaseFallSpeed()
     }
 
-    #Button initialization
+    #Button parameter creation
     pausebuttonSize = 40
     pausebuttonLocationX = 10
     pausebuttonLocationY = 10
-    darkModeButtonLocationX = 40
+    darkModeButtonLocationX = 47
     darkModeButtonLocationY = 100
-    themeButtonLocationX = 40
+    themeButtonLocationX = 47
     themeButtonLocationY = 160
-
+    speedButtonLocationX = 350
+    speedButtonLocationY = 20
+    #Button Creation
     pauseIconButton = PauseButton(screen, (pausebuttonLocationX, pausebuttonLocationY), pausebuttonSize, (255, 255, 255), (0, 0, 0))
     darkModeButton = TextButton(screen, "Dark", (darkModeButtonLocationX, darkModeButtonLocationY), (80, 30), pygame.font.Font(None, 18), [WHITE, (0, 128, 255), themes.getGray(), themes.getGray()])
-    themeButton = TextButton(screen, "Theme", (themeButtonLocationX, themeButtonLocationY), (80, 30), pygame.font.Font(None, 18), [WHITE, (0, 128, 255), themes.getGray(), themes.getGray()])
+    themeButton = TextButton(screen, "Theme", (themeButtonLocationX, themeButtonLocationY), (80, 30), pygame.font.Font(None, 20), [WHITE, (0, 128, 255), themes.getGray(), themes.getGray()])
+
 
     end_game_menu = EndGameMenu()
     menu = TetrisStartMenu()
@@ -85,6 +89,10 @@ def main():
         gameActive = False
 
     while not gameActive:
+        speedText = "Speed: " + str(difficulty.getAutoFallSpeed())
+        speedButton = TextButton(screen, speedText, (speedButtonLocationX, speedButtonLocationY), (80, 30),
+                                 pygame.font.Font(None, 18),
+                                 [themes.getBlue(), (0, 128, 255), tetris_board.get_board_color(), tetris_board.get_board_color()])
         keys = pygame.key.get_pressed()
         #BELOW If P is pressed, Pause menu 
         if keys[pygame.K_p]:
@@ -142,6 +150,8 @@ def main():
                         tetris_block.set_colors(newColor)
                         tetris_board.set_colors(newColor)
                         themeButton.changeText(themes.findColorName(newColor))
+                    if speedButton.rect.collidepoint(event.pos):
+                        difficulty.increaseFallSpeed()
 
                     
         tetris_board.draw_game_board(screen = screen)
@@ -156,6 +166,7 @@ def main():
         pauseIconButton.draw()
         darkModeButton.draw()
         themeButton.draw()
+        speedButton.draw()
 
         pygame.display.flip()
         clock.tick(fps)

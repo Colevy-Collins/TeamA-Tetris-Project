@@ -50,6 +50,7 @@ class Themes:
         self.BLACK = (0, 0, 0)
         self.WHITE = (255, 255, 255)
         self.GRAY = (89, 89, 89)
+        self.BLUE = (87, 160, 250)
         self.allColors = {
             "Fall": self.fall,
             "Spring": self.spring,
@@ -93,5 +94,7 @@ class Themes:
         return self.WHITE
     def getGray(self):
         return self.GRAY
+    def getBlue(self):
+        return self.BLUE
 
 
