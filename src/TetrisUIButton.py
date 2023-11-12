@@ -22,8 +22,8 @@ class TextButton:
 
         # Create the button background and border
         button_color = self.colors[1] if self.hovered else self.colors[0]
-        pygame.draw.rect(self.screen, self.colors[2], self.rect, 0)
-        pygame.draw.rect(self.screen, self.colors[3], self.rect, 2)
+        pygame.draw.rect(self.screen, self.colors[2], self.rect, 0, border_radius=35)
+        pygame.draw.rect(self.screen, self.colors[3], self.rect, 2, border_radius=35)
 
         # Create the button text
         text_surface, text_rect = self.create_text_surface(self.text, self.font, button_color)

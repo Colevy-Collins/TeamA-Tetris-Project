@@ -25,6 +25,7 @@ class Themes:
         self.winter = ()
         self.BLACK = (0, 0, 0)
         self.WHITE = (255, 255, 255)
+        self.GRAY = (89, 89, 89)
         self.allColors = (self.fall, self.default)
         self.colorPosition = -1
 
@@ -57,5 +58,7 @@ class Themes:
 
     def getWhite(self):
         return self.WHITE
+    def getGray(self):
+        return self.GRAY
 
 

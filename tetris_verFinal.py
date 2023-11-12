@@ -73,8 +73,8 @@ def main():
     themeButtonLocationY = 160
 
     pauseIconButton = PauseButton(screen, (pausebuttonLocationX, pausebuttonLocationY), pausebuttonSize, (255, 255, 255), (0, 0, 0))
-    darkModeButton = TextButton(screen, "Dark", (darkModeButtonLocationX, darkModeButtonLocationY), (100, 30), pygame.font.Font(None, 24), [WHITE, (0, 128, 255), BLACK, BLACK])
-    themeButton = TextButton(screen, "Theme", (themeButtonLocationX, themeButtonLocationY), (100, 30), pygame.font.Font(None, 24), [WHITE, (0, 128, 255), BLACK, BLACK])
+    darkModeButton = TextButton(screen, "Dark", (darkModeButtonLocationX, darkModeButtonLocationY), (80, 30), pygame.font.Font(None, 18), [WHITE, (0, 128, 255), themes.getGray(), themes.getGray()])
+    themeButton = TextButton(screen, "Theme", (themeButtonLocationX, themeButtonLocationY), (80, 30), pygame.font.Font(None, 18), [WHITE, (0, 128, 255), themes.getGray(), themes.getGray()])
 
     end_game_menu = EndGameMenu()
     menu = TetrisStartMenu()
