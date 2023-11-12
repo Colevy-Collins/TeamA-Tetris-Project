@@ -3,7 +3,6 @@ import sys
 from src.TetrisDefaultUI import DefaultUI
 from src.TetrisUIButton import UIButton
 
-
 class TetrisStartMenu(DefaultUI):
     def __init__(self):
         super().__init__()

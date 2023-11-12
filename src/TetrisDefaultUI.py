@@ -1,5 +1,5 @@
 import pygame
-from src.TetrisUIButton import TextButton
+#from src.TetrisUIButton import TextButton
  
 class DefaultUI:
     def __init__(self):

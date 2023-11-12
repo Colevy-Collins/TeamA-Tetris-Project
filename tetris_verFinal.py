@@ -7,7 +7,7 @@ from src.TetrisBoardChecker import BoardChecker
 from src.TetrisStartMenu import TetrisStartMenu
 from src.TetrisEndMenu import EndGameMenu
 from src.TetrisPauseMenu import PausedMenu
-from src.TetrisPauseIcon import PauseButton
+from src.TetrisPauseIcon import PauseIconButton
 from src.Difficulty import Difficulty
 #from src.TetrisUIButton import TextButton
 from src.Themes import Themes
@@ -74,27 +74,12 @@ def main():
     }
 
     #Button parameter creation
-    pausebuttonSize = 40
-    pausebuttonLocationX = 10
-    pausebuttonLocationY = 10
-    darkModeButtonLocationX = 47
-    darkModeButtonLocationY = 100
-    themeButtonLocationX = 47
-    themeButtonLocationY = 160
-    speedButtonLocationX = 350
-    speedButtonLocationY = 20
-    #Button Creation
-    pauseIconButton = PauseButton(screen, (pausebuttonLocationX, pausebuttonLocationY), pausebuttonSize, (255, 255, 255), (0, 0, 0))
-    darkModeButton = TextButton(screen, "Dark", (darkModeButtonLocationX, darkModeButtonLocationY), (80, 30), pygame.font.Font(None, 18), [WHITE, (0, 128, 255), themes.getGray(), themes.getGray()])
-    themeButton = TextButton(screen, "Theme", (themeButtonLocationX, themeButtonLocationY), (80, 30), pygame.font.Font(None, 20), [WHITE, (0, 128, 255), themes.getGray(), themes.getGray()])
-
-
     sizeValues = [40, 40, 40] # button sizeX, button sizeY, Icon Size
     pausebuttonLocationX = 10
     pausebuttonLocationY = 10
-    
     pauseIconButton = PauseIconButton(screen, (pausebuttonLocationX, pausebuttonLocationY), sizeValues, [(150, 150, 150 ), (255, 255, 255)])
-    darkModeButton = 
+
+
     end_game_menu = EndGameMenu()
     menu = TetrisStartMenu()
     menu.initialize()
