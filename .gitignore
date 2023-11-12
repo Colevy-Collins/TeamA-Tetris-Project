@@ -1,1 +1,2 @@
-tetris_env\
+tetris_env/
+*.pyc
