@@ -1,9 +1,28 @@
 from src.PygameDelegate import PygameDelegate
 pygame = PygameDelegate()
 
+from src.RandomDelegate import RandomDelegate
+random = RandomDelegate()
+
+from src.Button import Button
+
+NUM_OF_SHAPE_GRID_ROWS = 4
+NUM_OF_SHAPE_GRID_COLUMNS = 4
+ACCOUNT_FOR_NEXT_ROW = 4
+
+COLORS = (
+    (120, 37, 179),
+    (100, 179, 179),
+    (80, 34, 22),
+    (80, 134, 22),
+    (180, 34, 22),
+    (180, 34, 122),
+)
+
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GRAY = (128, 128, 128)
+RED = (255, 0, 0)
 
 # codesmell - params should be assinged to a var and var used instead of param
 # codesmell - long class
@@ -25,18 +44,18 @@ class TetrisBoard:
             (180, 34, 22),
             (180, 34, 122),
         )
+        self.board_color = WHITE
 
 
     # make a class that connects pygame to this one and remove pygame form class
     def draw_game_board(self, screen):
-        screen.fill(WHITE)
+        screen.fill(self.board_color)
         game_field = self.get_game_field()
         grid_block_height = self.get_grid_block_height()
         grid_block_width = self.get_grid_block_width()
         start_x_position = self.get_start_x_position()
         start_y_position = self.get_start_y_position()	
         size_of_grid_block = self.get_size_of_grid_block()
-
 
         for current_row in range(grid_block_height):
             for current_column in range(grid_block_width):
@@ -118,6 +137,13 @@ class TetrisBoard:
     def set_colors(self, value):
         self.colors = value
 
+    def switch_board_color(self):
+        if self.get_board_color() == BLACK:
+            self.board_color = WHITE
+        elif self.get_board_color() == WHITE:
+            self.board_color = BLACK
+    def get_board_color(self):
+        return self.board_color
     # Method to append to colors
     def append_to_colors(self, value):
         self.colors.append(value)

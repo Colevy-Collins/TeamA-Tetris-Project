@@ -1,6 +1,8 @@
 class BoardChecker:
-    def __init__(self, tetris_board ):
+    def __init__(self, tetris_board, board_manager, sound_manager):
         self.tetris_board = tetris_board
+        self.board_manager = board_manager
+        self.sound_manager = sound_manager
 
     def clear_lines(self):
         grid_block_height = self.tetris_board.get_grid_block_height()
@@ -8,7 +10,9 @@ class BoardChecker:
     
         for current_row in range(start_of_range, grid_block_height):
             if self.check_if_row_is_filled(current_row):
+                self.sound_manager.play_clear_line_sound()
                 self.delete_row(current_row)
+                self.board_manager.increase_score()
 
     def check_if_row_is_filled(self, current_row):
         grid_block_width = self.tetris_board.get_grid_block_width()

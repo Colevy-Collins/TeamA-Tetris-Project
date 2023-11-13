@@ -1,0 +1,7 @@
+__pycache__/
+src/data/*.txt
+tetris_env/
+.idea/
+tetris_env/
+*.pyc
+readme.txt

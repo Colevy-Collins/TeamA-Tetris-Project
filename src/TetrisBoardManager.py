@@ -14,12 +14,16 @@ GRAY = (128, 128, 128)
 # codesmell - params should be assinged to a var and var used instead of param
 # codesmell - long class
 class BoardManager:
-    def __init__(self, tetris_block, tetris_board):
+    def __init__(self, tetris_block, tetris_board, sound_manager, high_score_handler):
         self.tetris_block = tetris_block
         self.tetris_board = tetris_board     
         self.window_size = (400, 500)
         self.game_state = "start"  # or "gameover"
         self.figures = tetris_block
+        self.sound_manager = sound_manager
+        self.high_score_handler = high_score_handler
+        self.score = 0
+        self.high_score = self.high_score_handler.read_data()
 
     def create_figure(self, starting_shift_x, starting_shift_y):
         self.tetris_block.create_figure(starting_shift_x, starting_shift_y)
@@ -67,18 +71,19 @@ class BoardManager:
         self.create_figure(starting_shift_x, starting_shift_y)
     
     def move_to_bottom(self):
-        
         while not self.check_intersection():
             self.tetris_block.set_shift_in_y(self.tetris_block.get_shift_in_y() + 1)
         self.tetris_block.set_shift_in_y(self.tetris_block.get_shift_in_y() - 1)
         self.game_rules()
 
+        self.sound_manager.play_space_sound()
+
     def move_down(self):
         self.tetris_block.set_shift_in_y(self.tetris_block.get_shift_in_y() + 1)
         if self.check_intersection():
             self.tetris_block.set_shift_in_y(self.tetris_block.get_shift_in_y() - 1)
+            self.sound_manager.play_landing_sound()
             self.game_rules()
-
 
     def move_sideways(self, player_change_in_x):
         shift_in_x = self.tetris_block.get_shift_in_x()
@@ -86,6 +91,8 @@ class BoardManager:
         self.tetris_block.set_shift_in_x(shift_in_x + player_change_in_x)
         if self.check_intersection():
             self.tetris_block.set_shift_in_x(shift_in_x)
+
+        self.sound_manager.play_move_sound()
 
     def rotate_figure(self):      
         current_rotation = self.tetris_block.get_current_rotation()
@@ -95,6 +102,8 @@ class BoardManager:
         self.tetris_block.set_current_rotation((self.tetris_block.get_current_rotation() + 1) % len(figures[current_figure_type]))
         if self.check_intersection():
             self.tetris_block.set_current_rotation((self.tetris_block.get_current_rotation() - 1)  % len(figures[current_figure_type]))
+        
+        self.sound_manager.play_move_sound()
 
     def draw_figure(self, screen):
         shape = self.get_shape()
@@ -114,6 +123,16 @@ class BoardManager:
                                     start_y_position + size_of_grid_block * ( current_row + shift_in_y) + 1,
                                     size_of_grid_block - 2, size_of_grid_block - 2])
  
+    def draw_score(self, screen):
+        font = pygame.font.SysFont('Calibri', 25, True, False)
+        text = font.render("Score: " + str(self.score), True, BLACK)
+        screen.blit(text, [0, 0])
+
+    def draw_high_score(self, screen):
+        font = pygame.font.SysFont('Calibri', 25, True, False)
+        text = font.render("High Score: " + str(self.high_score), True, BLACK)
+        screen.blit(text, [0, 30])
+
 
     def get_shape(self):
         return self.tetris_block.get_shape()
@@ -134,3 +153,23 @@ class BoardManager:
             self.game_state = value
         else:
             self.game_state = "gameover"
+
+    def get_score(self):
+        return self.score
+    
+    def set_score(self, value):
+        self.score = value
+
+    def increase_score(self):
+        self.score += 2
+        if self.score > self.high_score:
+            self.high_score = self.score
+
+    def get_high_score(self):
+        return self.high_score
+    
+    def set_high_score(self, value):
+        self.high_score = value
+
+    def save_high_score(self):
+        self.high_score_handler.write_data(self.high_score)
