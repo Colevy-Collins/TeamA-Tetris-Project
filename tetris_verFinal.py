@@ -91,7 +91,7 @@ def main():
     speedButton = SpeedButton(screen, "Speed: " + str(difficulty.getAutoFallSpeed()), (speedButtonLocationX, speedButtonLocationY), (60, 30),
                                     pygame.font.Font(None, 22), [themes.getBlue(), themes.getGray()])
 
-    end_game_menu = EndGameMenu()
+    end_game_menu = EndGameMenu(board_manager)
     menu = TetrisStartMenu()
     menu.initialize()
 
@@ -110,7 +110,6 @@ def main():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                # board_manager.save_high_score()
                 gameActive = True
             if event.type == pygame.KEYDOWN:
                 if event.key in event_key_action_list:
@@ -168,9 +167,7 @@ def main():
         clock.tick(fps)
 
     board_manager.save_high_score()
-    pygame.quit()
     end_game_menu.initialize()
-    main()
 
 
 if __name__ == "__main__":
