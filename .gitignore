@@ -1,2 +1,4 @@
 __pycache__/
 src/data/*.txt
+tetris_env/
+.idea/
