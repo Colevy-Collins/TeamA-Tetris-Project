@@ -19,8 +19,8 @@ class IconButton(Button):
         for icon in icon_rects:
             pygame.draw.rect(self.screen, self.currentColor()[1], icon, self.size[2])
 
-    def clickAction():
+    def clickAction(self):
         pass
 
-    def keyAction():
+    def keyAction(self):
         pass

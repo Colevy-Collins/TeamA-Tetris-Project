@@ -13,8 +13,10 @@ from src.Difficulty import Difficulty
 from src.Themes import Themes
 from src.SoundManager import SoundManager
 from src.HighScoreHandler import HighScoreHandler
-
+from src.DarkModeButton import DarkModeButton
 from src.TetrisPauseIcon import PauseIconButton
+from src.ThemeButton import ThemeButton
+from src.SpeedButton import SpeedButton
 
 pygame = PygameDelegate()
 
@@ -77,8 +79,18 @@ def main():
     sizeValues = [40, 40, 40] # button sizeX, button sizeY, Icon Size
     pausebuttonLocationX = 10
     pausebuttonLocationY = 10
-    pauseIconButton = PauseIconButton(screen, (pausebuttonLocationX, pausebuttonLocationY), sizeValues, [(150, 150, 150 ), (255, 255, 255)])
-
+    darkModeButtonLocationX = 10
+    darkModeButtonLocationY = 80
+    themeButtonLocationX = 10
+    themeButtonLocationY = 130
+    speedButtonLocationX = 315
+    speedButtonLocationY = 10
+    pauseIconButton = PauseIconButton(screen, (pausebuttonLocationX, pausebuttonLocationY), sizeValues, [(150, 150, 150), (255, 255, 255)])
+    #darkModeButton = DarkModeButton(screen,(darkModeButtonLocationX, darkModeButtonLocationY), sizeValues, [(150, 150, 150), (255, 255, 255)])
+    darkModeButton = DarkModeButton(screen, "Dark", (darkModeButtonLocationX , darkModeButtonLocationY), (60, 30), pygame.font.Font(None, 22), [themes.getWhite(), themes.getGray()])
+    themeButton = ThemeButton(screen, "Theme", (themeButtonLocationX, themeButtonLocationY), (60, 30), pygame.font.Font(None, 16), [themes.getWhite(), themes.getGray()])
+    speedButton = SpeedButton(screen, "Speed: " + str(difficulty.getAutoFallSpeed()), (speedButtonLocationX, speedButtonLocationY), (60, 30),
+                                    pygame.font.Font(None, 22), [themes.getBlue(), themes.getGray()])
 
     end_game_menu = EndGameMenu()
     menu = TetrisStartMenu()
@@ -113,7 +125,34 @@ def main():
             if pauseIconButton.clickAction(event):
                 main()
             # PUT ICON BUTTON clickAction here!
-            # . . .
+            # Dark mode Button Logic
+            if darkModeButton.clickCheck(event):
+                tetris_board.switch_board_color()
+                darkModeButton.toggleDarkMode()
+                if darkModeButton.getDarkModeToggle() == 1:
+                    darkModeButton.changeText("Dark")
+                    print("Button Text: " + str(darkModeButton.getText()))
+                elif darkModeButton.getDarkModeToggle() == 0:
+                    darkModeButton.changeText("Light")
+                    print("Button Text: " + str(darkModeButton.getText()))
+            # Theme Button logic
+            if themeButton.clickCheck(event):
+                newColor = themes.returnNextColor()
+                tetris_block.set_colors(newColor)
+                tetris_board.set_colors(newColor)
+                themeButton.changeText(themes.findColorName(newColor))
+            if speedButton.clickCheck(event):
+                difficulty.increaseFallSpeed()
+            # if darkModeButton.clickAction(event):
+            #     if darkModeButton.getDarkModeToggle() == 1:
+            #         tetris_board.switch_board_color()
+            #         darkModeButton.changeText("Light")
+            #         print("Button Text: " + str(darkModeButton.getText()))
+            #     elif darkModeButton.getDarkModeToggle() == 0:
+            #         tetris_board.switch_board_color()
+            #         darkModeButton.changeText("Dark")
+            #         print("Button Text: " + str(darkModeButton.getText()))
+
 
             
         tetris_board.draw_game_board(screen = screen)
@@ -130,8 +169,10 @@ def main():
         pauseIconButton.initialize()
         if pauseIconButton.keyAction(pygame.key.get_pressed()):
             main()
-        # Add more button logic here
-        # . . .
+        # Add more button initializations
+        darkModeButton.draw()
+        themeButton.draw()
+        speedButton.draw()
 
         # Refresh the screen
         pygame.display.flip()
