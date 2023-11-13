@@ -86,7 +86,6 @@ def main():
     speedButtonLocationX = 315
     speedButtonLocationY = 10
     pauseIconButton = PauseIconButton(screen, (pausebuttonLocationX, pausebuttonLocationY), sizeValues, [(150, 150, 150), (255, 255, 255)])
-    #darkModeButton = DarkModeButton(screen,(darkModeButtonLocationX, darkModeButtonLocationY), sizeValues, [(150, 150, 150), (255, 255, 255)])
     darkModeButton = DarkModeButton(screen, "Dark", (darkModeButtonLocationX , darkModeButtonLocationY), (60, 30), pygame.font.Font(None, 22), [themes.getWhite(), themes.getGray()])
     themeButton = ThemeButton(screen, "Theme", (themeButtonLocationX, themeButtonLocationY), (60, 30), pygame.font.Font(None, 16), [themes.getWhite(), themes.getGray()])
     speedButton = SpeedButton(screen, "Speed: " + str(difficulty.getAutoFallSpeed()), (speedButtonLocationX, speedButtonLocationY), (60, 30),
@@ -131,10 +130,8 @@ def main():
                 darkModeButton.toggleDarkMode()
                 if darkModeButton.getDarkModeToggle() == 1:
                     darkModeButton.changeText("Dark")
-                    print("Button Text: " + str(darkModeButton.getText()))
                 elif darkModeButton.getDarkModeToggle() == 0:
                     darkModeButton.changeText("Light")
-                    print("Button Text: " + str(darkModeButton.getText()))
             # Theme Button logic
             if themeButton.clickCheck(event):
                 newColor = themes.returnNextColor()
@@ -143,18 +140,7 @@ def main():
                 themeButton.changeText(themes.findColorName(newColor))
             if speedButton.clickCheck(event):
                 difficulty.increaseFallSpeed()
-            # if darkModeButton.clickAction(event):
-            #     if darkModeButton.getDarkModeToggle() == 1:
-            #         tetris_board.switch_board_color()
-            #         darkModeButton.changeText("Light")
-            #         print("Button Text: " + str(darkModeButton.getText()))
-            #     elif darkModeButton.getDarkModeToggle() == 0:
-            #         tetris_board.switch_board_color()
-            #         darkModeButton.changeText("Dark")
-            #         print("Button Text: " + str(darkModeButton.getText()))
 
-
-            
         tetris_board.draw_game_board(screen = screen)
         board_manager.draw_figure(screen = screen)
         board_checker.clear_lines()
@@ -173,6 +159,7 @@ def main():
         darkModeButton.draw()
         themeButton.draw()
         speedButton.draw()
+        speedButton.changeText("Speed: " + str(difficulty.getAutoFallSpeed()))
 
         # Refresh the screen
         pygame.display.flip()

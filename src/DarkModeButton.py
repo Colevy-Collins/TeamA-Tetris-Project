@@ -28,7 +28,6 @@ class DarkModeButton(Button):
         return text_surface, text_surface.get_rect()
 
     def changeText(self, newText):
-        print(newText)
         self.text = newText
 
     def getText(self):
