@@ -4,13 +4,12 @@ from src.TetrisUIButton import UIButton
 from src.TetrisDefaultUI import DefaultUI
 
 class EndGameMenu(DefaultUI):
-    def __init__(self):
+    def __init__(self, board_manager):
         super().__init__()
         buttonWidth = 200
-
+        self.board_manager = board_manager
         self.main_menu_button = UIButton(self.screen, "Main Menu", (self.screen_width // 2 - (buttonWidth / 2), self.screen_height // 2 + 50), (buttonWidth, 40), self.button_font, [self.WHITE, self.BLACK])
         self.quit_button = UIButton(self.screen, "Quit", (self.screen_width // 2 - (buttonWidth / 2), self.screen_height // 2 + 100), (buttonWidth, 40), self.button_font, [self.WHITE, self.BLACK])
-
 
     def initialize(self):
         self.running = True
@@ -26,12 +25,27 @@ class EndGameMenu(DefaultUI):
             # Set Background
             self.screen.fill(self.BLACK)
 
+            # Draw Score
+            self.draw_score(self.screen)
+            self.draw_high_score(self.screen)
+
             # Draw Buttons and Title
             self.drawButton()
             self.drawTitle()
 
             # Update Screen
             pygame.display.flip()
+
+    def draw_score(self, screen):
+        font = pygame.font.SysFont('Calibri', 25, True, False)
+        text = font.render("Score: " + str(self.board_manager.get_score()), True, self.WHITE)
+        screen.blit(text, [100, 200])
+
+    def draw_high_score(self, screen):
+        font = pygame.font.SysFont('Calibri', 25, True, False)
+        text = font.render("High Score: " + str(self.board_manager.get_high_score()), True, self.WHITE)
+        screen.blit(text, [100, 230])
+
 
     def drawButton(self):
         # Draw buttons
