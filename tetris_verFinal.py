@@ -78,7 +78,7 @@ def main():
     #Button parameter creation
     sizeValues = [40, 40, 40] # button sizeX, button sizeY, Icon Size
     pausebuttonLocationX = 10
-    pausebuttonLocationY = 10
+    pausebuttonLocationY = 200
     darkModeButtonLocationX = 10
     darkModeButtonLocationY = 80
     themeButtonLocationX = 10
