@@ -168,7 +168,7 @@ def main():
 
     board_manager.save_high_score()
     end_game_menu.initialize()
-
+    main()
 
 if __name__ == "__main__":
     main()
