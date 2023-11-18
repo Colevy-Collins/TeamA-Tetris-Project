@@ -9,7 +9,6 @@ from src.TetrisEndMenu import EndGameMenu
 from src.TetrisPauseMenu import PausedMenu
 from src.TetrisPauseIcon import PauseIconButton
 from src.Difficulty import Difficulty
-#from src.TetrisUIButton import TextButton
 from src.Themes import Themes
 from src.SoundManager import SoundManager
 from src.HighScoreHandler import HighScoreHandler
@@ -168,7 +167,7 @@ def main():
 
     board_manager.save_high_score()
     end_game_menu.initialize()
-
+    main()
 
 if __name__ == "__main__":
     main()
