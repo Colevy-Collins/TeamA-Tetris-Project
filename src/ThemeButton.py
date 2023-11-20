@@ -4,6 +4,7 @@ from src.Themes import Themes
 from src.TetrisPauseMenu import PausedMenu
 from src.TetrisButton import Button
 themes = Themes()
+
 class ThemeButton(Button):
     def __init__(self, screen, text, position, size, font, colors):
         super().__init__(screen, position, size, colors)
