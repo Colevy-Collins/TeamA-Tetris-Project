@@ -1,8 +1,7 @@
 import pygame
 import pytest
 from src.Themes import Themes
-from src.TetrisButton import Button
-from src.SpeedButton import SpeedButton
+from src.DarkModeButton import DarkModeButton
 
 @pytest.fixture
 def dark_mode_button_instance():
