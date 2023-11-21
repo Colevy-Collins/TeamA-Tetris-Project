@@ -1,13 +1,8 @@
 import pygame
 import pytest
-# import sys
-# import os
-# sys.path.append(os.path.abspath('..'))
-# sys.path.append(os.path.abspath('../src'))
-import src.Themes
 from src.Themes import Themes
 from src.TetrisButton import Button
-from src.ThemeButton import ThemeButton
+from src.SpeedButton import SpeedButton
 
 @pytest.fixture
 def theme_button_instance():
