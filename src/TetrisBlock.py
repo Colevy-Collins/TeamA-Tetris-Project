@@ -78,4 +78,7 @@ class TetrisBlock:
     # Method to append to colors
     def append_to_colors(self, value):
         self.colors.append(value)
+
+    def set_current_figure_type(self, value):
+        self.current_figure_type = value
     

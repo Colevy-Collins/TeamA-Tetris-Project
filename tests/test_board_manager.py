@@ -40,8 +40,8 @@ def test_create_figure_no_intersection(board_manager):
 def test_freeze_figure(board_manager):
     # Pre-set the block at a specific place where the freeze will happen
     board_manager.tetris_block.set_shift_in_x(5)
-    board_manager.tetris_block.set_shift_in_y(19)
-    board_manager.tetris_block.set_current_figure_type(0)  # Assuming this sets a specific block type
+    board_manager.tetris_block.set_shift_in_y(18)
+    board_manager.tetris_block.set_current_figure_type(6)  # Assuming this sets a specific block type
     board_manager.freeze_figure()
     # Now assert that the block's position in the game_field reflect the freeze
     game_field = board_manager.tetris_board.get_game_field()
@@ -50,15 +50,15 @@ def test_freeze_figure(board_manager):
     for i in range(NUM_OF_SHAPE_GRID_ROWS):
         for j in range(NUM_OF_SHAPE_GRID_COLUMNS):
             if (i * ACCOUNT_FOR_NEXT_ROW + j) in shape:
-                assert game_field[19+i][5+j] == color  # Assert each block part is now part of game_field
+                assert game_field[18+i][5+j] == color  # Assert each block part is now part of game_field
 
 
 def test_check_intersection(board_manager):
     # Set up board and block in a way that will cause an intersection
     # For example, place a block at the bottom and try to move it down
     board_manager.tetris_block.set_shift_in_x(5)
-    board_manager.tetris_block.set_shift_in_y(19)
-    board_manager.tetris_block.set_current_figure_type(0)
+    board_manager.tetris_block.set_shift_in_y(18)
+    board_manager.tetris_block.set_current_figure_type(6)
     # Calling freeze_figure to place the block on the game board
     board_manager.freeze_figure()
     # Moving the tetris_block down should now cause an intersection
