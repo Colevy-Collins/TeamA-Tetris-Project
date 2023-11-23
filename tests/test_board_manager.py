@@ -95,16 +95,20 @@ def test_rotate_figure(board_manager):
 
 
 def test_increase_score(board_manager):
-    initial_score = board_manager.get_score()
-    board_manager.increase_score()
-    # Assume the score increments by 2 and check the score is increased accordingly
-    assert board_manager.get_score() == initial_score + 2
-    # Ensure new high score is set if current score exceeds high score
-    if initial_score + 2 > board_manager.get_high_score():
-        assert board_manager.get_high_score() == initial_score + 2
-    else:
-        assert board_manager.get_high_score() == board_manager.high_score_handler.read_data()
+    # Mock the high score handler's read_data method to always return 0
+    with patch.object(board_manager.high_score_handler, 'read_data', return_value=0):
+        initial_score = board_manager.get_score()
+        
+        # Call the increase_score method, which supposedly increases the score
+        board_manager.increase_score()
+        score_increment = 2  # or use the actual increment value set in the increase_score method
+        
+        # Assert the score is increased accordingly
+        assert board_manager.get_score() == initial_score + score_increment
 
+        # Since we mocked the high_score_handler to return 0,
+        # the new high score should be set to the increased score
+        assert board_manager.get_high_score() == initial_score + score_increment
 
 def test_game_state_set_and_get(board_manager):
     # Set the game state and assert it changes appropriately
