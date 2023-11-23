@@ -4,6 +4,7 @@ from src.TetrisBlock import TetrisBlock
 from src.TetrisBoard import TetrisBoard
 from src.SoundManager import SoundManager 
 from src.HighScoreHandler import HighScoreHandler
+from unittest.mock import patch
 
 import pygame
 pygame.mixer.init()  # This initializes the mixer, but we want to avoid actual sound playback
@@ -67,12 +68,20 @@ def test_check_intersection(board_manager):
 
 
 def test_move_to_bottom(board_manager):
+    start_x = 3
+    start_y = 0
+    board_manager.create_figure(start_x, start_y)
     initial_y = board_manager.tetris_block.get_shift_in_y()
-    board_manager.move_to_bottom()
-    # Assert the new Y is greater than initial Y and no intersections below the current Y
-    assert board_manager.tetris_block.get_shift_in_y() > initial_y
-    # To ensure no intersections below, the next Y position should cause an intersection
-    board_manager.tetris_block.set_shift_in_y(board_manager.tetris_block.get_shift_in_y() + 1)
+
+    # Patch the game_rules method to not execute during the test
+    with patch.object(board_manager, 'game_rules', return_value=None):
+        board_manager.move_to_bottom()
+
+    # Assert the new Y is at the bottom of the board and greater than initial Y
+    new_y = board_manager.tetris_block.get_shift_in_y()
+    assert new_y > initial_y
+    # Now you can assert that the next move down would cause an intersection
+    board_manager.tetris_block.set_shift_in_y(new_y + 1)
     assert board_manager.check_intersection()
 
 
