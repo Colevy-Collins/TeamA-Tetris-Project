@@ -16,7 +16,7 @@ def board_checker():
     tetris_block = TetrisBlock()
     tetris_board = TetrisBoard()
     sound_manager = SoundManager()
-    high_score_handler = HighScoreHandler()
+    high_score_handler = HighScoreHandler('src/data', 'high_score.txt')
     # Assume SoundManagerMock and HighScoreHandlerMock are mock versions developed for testing purposes.
 
     # Initialize empty board
