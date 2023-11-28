@@ -87,7 +87,7 @@ def main():
     pauseIconButton = PauseIconButton(screen, (pausebuttonLocationX, pausebuttonLocationY), sizeValues, [(150, 150, 150), (255, 255, 255)])
     darkModeButton = DarkModeButton(screen, "Dark", (darkModeButtonLocationX , darkModeButtonLocationY), (60, 30), pygame.font.Font(None, 22), [themes.getWhite(), themes.getGray()])
     themeButton = ThemeButton(screen, "Theme", (themeButtonLocationX, themeButtonLocationY), (60, 30), pygame.font.Font(None, 16), [themes.getWhite(), themes.getGray()])
-    speedButton = SpeedButton(screen, "Easy", (speedButtonLocationX, speedButtonLocationY), (60, 30),
+    speedButton = SpeedButton(screen, difficulty.getDifficulty(), (speedButtonLocationX, speedButtonLocationY), (60, 30),
                                     pygame.font.Font(None, 22), [themes.getBlue(), themes.getGray()])
 
     end_game_menu = EndGameMenu(board_manager)
