@@ -15,8 +15,8 @@ def dark_mode_button_instance():
 def test_dark_mode_button_initialization(dark_mode_button_instance):
     assert isinstance(dark_mode_button_instance, DarkModeButton)
 
-def test_dark_mode_button_draw(dark_mode_button_instance):
-    dark_mode_button_instance.draw()
+def test_dark_mode_button_get_text(dark_mode_button_instance):
+    assert dark_mode_button_instance.getText() is "TestButton"
 
 def test_dark_mode_button_create_text_surface(dark_mode_button_instance):
     text_surface, text_rect = dark_mode_button_instance.create_text_surface('TestText', dark_mode_button_instance.font, (255, 255, 255))

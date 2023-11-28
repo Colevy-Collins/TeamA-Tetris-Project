@@ -23,3 +23,17 @@ class Difficulty:
         if self._auto_fall_speed > 2:
             self._auto_fall_speed = 2
 
+    def adjustDifficulty(self):
+        if self._auto_fall_speed >= 10:
+            self._auto_fall_speed = 2
+        else:
+            self._auto_fall_speed += 4
+
+    def getDifficulty(self):
+        if self.getAutoFallSpeed() <= 2:
+            return "Easy"
+        elif self.getAutoFallSpeed() > 2 and self.getAutoFallSpeed() <= 6:
+            return "Medium"
+        else:
+            return "Hard"
+
