@@ -85,7 +85,7 @@ def main():
     speedButtonLocationX = 315
     speedButtonLocationY = 10
     pauseIconButton = PauseIconButton(screen, (pausebuttonLocationX, pausebuttonLocationY), sizeValues, [(150, 150, 150), (255, 255, 255)])
-    darkModeButton = DarkModeButton(screen, "Dark", (darkModeButtonLocationX , darkModeButtonLocationY), (60, 30), pygame.font.Font(None, 22), [themes.getWhite(), themes.getGray()])
+    darkModeButton = DarkModeButton(screen, "Light", (darkModeButtonLocationX , darkModeButtonLocationY), (60, 30), pygame.font.Font(None, 22), [themes.getWhite(), themes.getGray()])
     themeButton = ThemeButton(screen, "Theme", (themeButtonLocationX, themeButtonLocationY), (60, 30), pygame.font.Font(None, 16), [themes.getWhite(), themes.getGray()])
     speedButton = SpeedButton(screen, difficulty.getDifficulty(), (speedButtonLocationX, speedButtonLocationY), (60, 30),
                                     pygame.font.Font(None, 22), [themes.getBlue(), themes.getGray()])
