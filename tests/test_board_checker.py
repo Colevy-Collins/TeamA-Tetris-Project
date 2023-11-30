@@ -8,6 +8,17 @@ from src.HighScoreHandler import HighScoreHandler
 from src.SoundManager import SoundManager
 import pygame
 
+@pytest.fixture(scope='session', autouse=True)
+def pygame_mixer_init():
+    # Initialize pygame mixer
+    pygame.mixer.init()
+    # Set the number of channels to 0 to "mute" the mixer
+    pygame.mixer.set_num_channels(0)
+    yield
+    # Quit pygame mixer after all tests are done
+    pygame.mixer.quit()
+    
+
 # Mock SoundManager for tests
 class MockSoundManager:
     def __init__(self):
