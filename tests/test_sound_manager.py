@@ -1,52 +1,55 @@
-import unittest
-import pygame
+import pytest
+from unittest.mock import patch
 from src.SoundManager import SoundManager
 
-class TestSoundManager(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        # Initialize Pygame
-        pygame.init()
-        pygame.mixer.init()
-        pygame.mixer.music.set_volume(0.0)  # Turn off background music for tests
 
-    def setUp(self):
-        self.sound_manager = SoundManager()
+@pytest.fixture
+def sound_manager():
+    with patch('pygame.mixer.init'), \
+            patch('pygame.mixer.Sound'), \
+            patch('pygame.mixer.music.load'), \
+            patch('pygame.mixer.music.play'), \
+            patch('pygame.mixer.music.stop'):
+        yield SoundManager()
 
-    def tearDown(self):
-        pygame.mixer.quit()
 
-    def test_play_move_sound(self):
-        self.sound_manager.play_move_sound()
-        self.assertTrue(pygame.mixer.get_busy())
+def test_play_move_sound(sound_manager):
+    with patch.object(sound_manager.move_sound, 'play') as mock_play_move_sound:
+        sound_manager.play_move_sound()
+        mock_play_move_sound.assert_called_once()
 
-    def test_play_landing_sound(self):
-        self.sound_manager.play_landing_sound()
-        self.assertTrue(pygame.mixer.get_busy())
 
-    def test_play_clear_line_sound(self):
-        self.sound_manager.play_clear_line_sound()
-        self.assertTrue(pygame.mixer.get_busy())
+def test_play_landing_sound(sound_manager):
+    with patch.object(sound_manager.landing_sound, 'play') as mock_play_landing_sound:
+        sound_manager.play_landing_sound()
+        mock_play_landing_sound.assert_called_once()
 
-    def test_play_space_sound(self):
-        self.sound_manager.play_space_sound()
-        self.assertTrue(pygame.mixer.get_busy())
 
-    def test_play_game_over_sound(self):
-        self.sound_manager.play_game_over_sound()
-        self.assertTrue(pygame.mixer.get_busy())
+def test_play_clear_line_sound(sound_manager):
+    with patch.object(sound_manager.clear_line_sound, 'play') as mock_play_clear_line_sound:
+        sound_manager.play_clear_line_sound()
+        mock_play_clear_line_sound.assert_called_once()
 
-    def test_play_background_music(self):
-        self.sound_manager.play_background_music()
-        pygame.mixer.music.set_volume(0.0)
-        pygame.mixer.music.unpause()
-        pygame.mixer.music.pause()
-        self.assertTrue(pygame.mixer.music.get_busy())
 
-    def test_stop_background_music(self):
-        self.sound_manager.play_background_music()
-        self.sound_manager.stop_background_music()
-        self.assertFalse(pygame.mixer.music.get_busy())
+def test_play_space_sound(sound_manager):
+    with patch.object(sound_manager.space_sound, 'play') as mock_play_space_sound:
+        sound_manager.play_space_sound()
+        mock_play_space_sound.assert_called_once()
 
-if __name__ == "__main__":
-    unittest.main()
+
+def test_play_background_music(sound_manager):
+    with patch('pygame.mixer.music.play') as mock_play_background_music:
+        sound_manager.play_background_music()
+        mock_play_background_music.assert_called_once_with(-1, 0.0)
+
+
+def test_stop_background_music(sound_manager):
+    with patch('pygame.mixer.music.stop') as mock_stop_background_music:
+        sound_manager.stop_background_music()
+        mock_stop_background_music.assert_called_once()
+
+
+def test_play_game_over_sound(sound_manager):
+    with patch.object(sound_manager.game_over_sound, 'play') as mock_play_game_over_sound:
+        sound_manager.play_game_over_sound()
+        mock_play_game_over_sound.assert_called_once()

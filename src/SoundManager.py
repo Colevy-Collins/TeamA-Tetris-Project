@@ -8,6 +8,7 @@ class SoundManager:
         self.space_sound = pygame.mixer.Sound("src/data/space.wav")
         self.game_over_sound = pygame.mixer.Sound("src/data/game_over.wav")
         self.background_music = pygame.mixer.music.load("src/data/theme_song.wav")
+        
 
     def play_move_sound(self):
         self.move_sound.play()

@@ -144,6 +144,8 @@ class TetrisBoard:
             self.board_color = BLACK
     def get_board_color(self):
         return self.board_color
+    def set_board_color(self, color):
+        self.board_color = color
     # Method to append to colors
     def append_to_colors(self, value):
         self.colors.append(value)
