@@ -2,6 +2,7 @@ from src.PygameDelegate import PygameDelegate
 pygame = PygameDelegate()
 from src.RandomDelegate import RandomDelegate
 random = RandomDelegate()
+from src.Themes import Themes
 
 NUM_OF_SHAPE_GRID_ROWS = 4
 NUM_OF_SHAPE_GRID_COLUMNS = 4
@@ -124,13 +125,15 @@ class BoardManager:
                                     size_of_grid_block - 2, size_of_grid_block - 2])
  
     def draw_score(self, screen):
+        theme = Themes()
         font = pygame.font.SysFont('Calibri', 25, True, False)
-        text = font.render("Score: " + str(self.score), True, BLACK)
+        text = font.render("Score: " + str(self.score), True, theme.getBlue())
         screen.blit(text, [0, 0])
 
     def draw_high_score(self, screen):
+        theme = Themes()
         font = pygame.font.SysFont('Calibri', 25, True, False)
-        text = font.render("High Score: " + str(self.high_score), True, BLACK)
+        text = font.render("High Score: " + str(self.high_score), True, theme.getBlue())
         screen.blit(text, [0, 30])
 
 

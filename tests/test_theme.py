@@ -15,7 +15,7 @@ def theme_button_instance():
 def test_theme_button_initialization(theme_button_instance):
     assert isinstance(theme_button_instance, ThemeButton)
 
-def test_theme_button_draw(theme_button_instance):
-    theme_button_instance.draw()
+def test_theme_button_get_text(theme_button_instance):
+    assert theme_button_instance.getText() is "TestButton"
 
 # Add more tests as needed

@@ -16,8 +16,8 @@ def speed_button_instance():
 def test_speed_button_initialization(speed_button_instance):
     assert isinstance(speed_button_instance, SpeedButton)
 
-def test_speed_button_draw(speed_button_instance):
-    speed_button_instance.draw()
+def test_speed_button_get_text(speed_button_instance):
+    assert speed_button_instance.getText() is 'TestButton'
 
 def test_speed_button_create_text_surface(speed_button_instance):
     text_surface, text_rect = speed_button_instance.create_text_surface('TestText', speed_button_instance.font, (255, 255, 255))
