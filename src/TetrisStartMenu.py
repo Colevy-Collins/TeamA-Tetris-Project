@@ -6,6 +6,7 @@ from src.TetrisUIButton import UIButton
 class TetrisStartMenu(DefaultUI):
     def __init__(self):
         super().__init__()
+
         buttonWidth = 100
         self.startGameFlag = False
 
@@ -15,7 +16,6 @@ class TetrisStartMenu(DefaultUI):
 
     def initialize(self):
         self.running = True
-
         while self.running:
             events = pygame.event.get()
             for event in events:
