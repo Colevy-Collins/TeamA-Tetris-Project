@@ -28,4 +28,3 @@ def test_speed_button_change_text(speed_button_instance):
     speed_button_instance.changeText('NewText')
     assert speed_button_instance.getText() == 'NewText'
 
-# Add more tests as needed

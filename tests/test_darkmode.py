@@ -31,5 +31,3 @@ def test_dark_mode_button_toggle_dark_mode(dark_mode_button_instance):
     initial_toggle = dark_mode_button_instance.getDarkModeToggle()
     dark_mode_button_instance.toggleDarkMode()
     assert dark_mode_button_instance.getDarkModeToggle() != initial_toggle
-
-# Add more tests as needed

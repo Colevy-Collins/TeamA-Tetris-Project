@@ -36,19 +36,8 @@ def test_switch_board_color(tetris_board):
     assert tetris_board.get_board_color() == (0, 0, 0)
 
 def test_draw_game_board(tetris_board):
-    # Initialize the board to ensure there's something to draw
     tetris_board.initialize_board(20, 10)
-
     mock_screen = Mock()
-    
-    # Mock pygame.draw.rect to assert it gets called correctly later
     pygame.draw.rect = Mock()
-
-    # Call the method to test, with the mocked screen object
     tetris_board.draw_game_board(mock_screen)
-    
-    # Assert the draw method was called
     assert pygame.draw.rect.called
-
-    # To test that rect is called with the correct parameters, more specific assertions would be necessary
-    # This would involve knowing or calculating the expected call arguments based on the board state.
