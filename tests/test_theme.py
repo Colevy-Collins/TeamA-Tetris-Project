@@ -18,4 +18,3 @@ def test_theme_button_initialization(theme_button_instance):
 def test_theme_button_get_text(theme_button_instance):
     assert theme_button_instance.getText() is "TestButton"
 
-# Add more tests as needed

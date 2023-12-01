@@ -2,12 +2,10 @@ import random
 import pytest
 from src.TetrisBlock import TetrisBlock
 
-# The fixture will provide a fresh TetrisBlock object for each test case.
 @pytest.fixture
 def tetris_block():
     return TetrisBlock()
 
-# Example test for initializing TetrisBlock and checking its properties
 def test_TetrisBlock_init(tetris_block):
     assert tetris_block.current_figure_type == 0
     assert tetris_block.current_figure_color == 0
@@ -16,10 +14,7 @@ def test_TetrisBlock_init(tetris_block):
     assert tetris_block.shift_in_y == 0
     assert isinstance(tetris_block.colors, tuple)
     assert isinstance(tetris_block.Figures, tuple)
-
-# Other tests will go here
-
-# Test for the create_figure method
+    
 def test_create_figure(tetris_block):
     starting_shift_x = 3
     starting_shift_y = 2

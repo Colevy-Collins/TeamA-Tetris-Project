@@ -11,17 +11,14 @@ def high_score_handler(tmp_path):
     return handler
 
 def test_read_high_score_no_file(high_score_handler):
-    # If the high score file does not exist, read_data() should return 0
     assert high_score_handler.read_data() == 0
 
 def test_write_high_score_updates_value(high_score_handler):
-    # When a new high score is saved, it should be retrievable from the file
     test_score = 100
     high_score_handler.write_data(test_score)
     assert high_score_handler.read_data() == test_score
 
 def test_read_non_numeric_high_score_returns_zero(high_score_handler):
-    # If the high score file contains non-numeric content, read_data() should return 0
     test_directory, test_filename = high_score_handler.directory, high_score_handler.filename
     with open(f"{test_directory}/{test_filename}", "w") as f:
         f.write("not_a_number")
