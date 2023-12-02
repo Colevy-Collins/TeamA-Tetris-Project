@@ -105,7 +105,8 @@ def main():
             counter = 0
 
         # Check if we need to automatically go down
-        if counter % (fps // difficulty.getAutoFallSpeed() // level) == 0 or pressing_down:
+        gameMovement = counter % (fps // difficulty.getAutoFallSpeed() // level)
+        if gameMovement == 0 or pressing_down:
             if board_manager.get_game_state() == "start":
                 board_manager.move_down()
 

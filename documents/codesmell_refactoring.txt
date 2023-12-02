@@ -72,18 +72,16 @@ Refactor: Removing unused code & changing access to fall speed modifier
 Location in Source Tree of Refactor:
 2 Locations (1.) TeamA-Tetris-Project > src > tetris_verFinal.py, (2.) TeamA-Tetris-Project > src > Difficulty.py
 
-Code Smell / Refactor 9: 
-Date Found:
-Code Smell: 
- - 
-Refactor:
- - 
+Code Smell 9
+Date Found: 12/2/23
+Code Smell: Long Parameter List
+ - SpeedButton has a very long parameter list. This is a code smell because it makes initializing/using this class very involved and difficulty. Some of these parameters are in the initialization of the button, but they also exist in methods like pygame.Rect(). There are up to 6 parameters being used in this __init__ of SpeedButton
 Location in Source Tree of Refactor:
+ - TeamA-Tetris-Project > src > SpeedButton.py
 
-Code Smell / Refactor 10: 
-Date Found:
-Code Smell: 
- - 
-Refactor:
- - 
+Code Smell 10
+Date Found: 12/2/23
+Code Smell: If/Else
+ - getDifficulty() method has difficult to expand if/else chain for future feature additions. This is also heavily coupled in tetris_verFinal.py where these difficulty states in the if/else chain are used directly to change the button appearance. Any slight adjustment to either of these places could cause the difficulty functionality to break easily. 
 Location in Source Tree of Refactor:
+ - TeamA-Tetris-Project > src > Difficulty.py
