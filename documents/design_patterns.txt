@@ -12,5 +12,5 @@ Location in Source Tree: TeamA-Tetris-Project > src > tetris_verFinal.py
 
 Design Pattern 3
 Date Found: 12/2/23
-Pattern: 
-Location in Source Tree: 
+Pattern: Strategy pattern is used in Difficulty.py. The strategy pattern is used to change the difficulty of the game during session. The difficulty is changed by changing the speed of the game.
+Location in Source Tree: TeamA-Tetris-Project > src > Difficulty.py
