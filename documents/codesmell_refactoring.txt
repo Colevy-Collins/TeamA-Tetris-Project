@@ -26,3 +26,14 @@ Refactor: Remove Duplicate Code
     - This was refactored by removing one of the button classes and all calls to that class.
 Location in Source Tree of Refactor:
     - TeamA-Tetris-Project > src > Button.py
+
+Code Smell / Refactor 4: 
+Date Found 12/2/23
+Code smell: Dead Code
+ - Speed button class file has
+Refactor: Remove all dead unused methods/attributes in SpeedButton class
+ - This was refactored by removing all the unused methods in this class. These include the methods create_text_surface(), clickAction(), generate_icon(), initiliaze(), and keyAction(). The attribute darkModeToggle was also removed
+Location in Source Tree of Refactor: 
+ - TeamA-Tetris-Project > src > SpeedButton.py
+
+Code Smell / Refactor 5: 
