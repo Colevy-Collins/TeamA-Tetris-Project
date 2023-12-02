@@ -4,8 +4,6 @@ pygame = PygameDelegate()
 from src.RandomDelegate import RandomDelegate
 random = RandomDelegate()
 
-from src.Button import Button
-
 NUM_OF_SHAPE_GRID_ROWS = 4
 NUM_OF_SHAPE_GRID_COLUMNS = 4
 ACCOUNT_FOR_NEXT_ROW = 4

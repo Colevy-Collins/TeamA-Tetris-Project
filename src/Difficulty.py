@@ -16,12 +16,6 @@ class Difficulty:
     def getAutoFallSpeed(self):
         return self._auto_fall_speed
 
-    def increaseFallSpeed(self):
-        self._auto_fall_speed += 1
-
-    def decreaseFallSpeed(self):
-        if self._auto_fall_speed > 2:
-            self._auto_fall_speed = 2
 
     def adjustDifficulty(self):
         if self._auto_fall_speed >= 10:
