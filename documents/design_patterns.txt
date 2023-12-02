@@ -1,1 +1,16 @@
-Singleton
+Design Pattern 1: Singleton
+Date Found: 12/2/23
+Pattern: Difficulty class is a version of the singleton design pattern. Only one version of this class can exist inside the main() file and it controls multiple attributes and behaviors for changing difficulty. 
+Location in Source Tree: TeamA-Tetris-Project > src > Difficulty.py
+
+
+Design Pattern 2
+Date Found: 12/2/23
+Pattern: State pattern is used in tetris_verFinal.py. in the event game loop on line 113, the state pattern is used to track when new keys are pressed. loop calls certain methods based on which keys are pressed.
+Location in Source Tree: 
+
+
+Design Pattern 3
+Date Found: 12/2/23
+Pattern: 
+Location in Source Tree: 

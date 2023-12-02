@@ -43,7 +43,7 @@ Code Smell: Duplicate Code
 Refactor: Remove duplication and have one main source of colors
  - The colors are now all being pulled from the Theme() class for the most part. Duplicate instances of common colors have been removed
 Location in Source Tree of Refactor:
- - TeamA-Tetris-Project > src > tetris_verFinal.py
+ - TeamA-Tetris-Project > tetris_verFinal.py
 
 Code Smell / Refactor 6:
 Date Found: 12/2/23
@@ -61,7 +61,7 @@ Code Smell: Comments
 Refactor: Remove unnecessary comments & rewrite outdated comments
  - Remove explanatory comments with no purpose and also rewrite the outdated comments. New comments were added in sections of the code that were also very confusing. 
 Location in Source Tree of Refactor:
- - TeamA-Tetris-Project > src > tetris_verFinal.py
+ - TeamA-Tetris-Project > tetris_verFinal.py
 
 Code Smell / Refactor 8:
 Date Found: 11/29/23
