@@ -19,8 +19,6 @@ from src.SpeedButton import SpeedButton
 pygame = PygameDelegate()
 
 def main():
-    BLACK = (0, 0, 0)
-    WHITE = (255, 255, 255)
     themes = Themes()
     pygame.init()
 
@@ -51,7 +49,6 @@ def main():
     
     tetris_board.initialize_board(game_block_height, game_block_width)
 
-
     starting_shift_x = 3 
     starting_shift_y = 0
 
@@ -68,9 +65,7 @@ def main():
         pygame.K_DOWN: "true",
         pygame.K_LEFT: lambda: board_manager.move_sideways(-1),
         pygame.K_RIGHT: lambda: board_manager.move_sideways(1),
-        pygame.K_SPACE: lambda: board_manager.move_to_bottom(),
-        pygame.K_1: lambda: difficulty.increaseFallSpeed(),
-        pygame.K_2: lambda: difficulty.decreaseFallSpeed()
+        pygame.K_SPACE: lambda: board_manager.move_to_bottom()
     }
 
     #Button parameter creation
@@ -129,7 +124,6 @@ def main():
             #Pause Button code
             if pauseIconButton.clickAction(event):
                 main()
-            # PUT ICON BUTTON clickAction here!
             # Dark mode Button Logic
             if darkModeButton.clickCheck(event):
                 tetris_board.switch_board_color()
@@ -157,13 +151,13 @@ def main():
             gameActive = True
             sound_manager.stop_background_music()
             sound_manager.play_game_over_sound()
-        
-    # PUT ICON BUTTONS HERE!
+
         # Pause Logic
         pauseIconButton.initialize()
         if pauseIconButton.keyAction(pygame.key.get_pressed()):
             main()
-        # Add more button initializations
+
+        # Button Refreshes
         darkModeButton.draw()
         themeButton.draw()
         speedButton.draw()

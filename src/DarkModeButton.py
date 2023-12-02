@@ -33,28 +33,6 @@ class DarkModeButton(Button):
     def getText(self):
         return self.text
 
-    # def initialize(self):
-    #     text_surface, text_rect = self.create_text_surface("Dark", pygame.font.Font(None, 37), themes.getGray())
-    #
-    #     self.screen.blit(text_surface, text_rect)
-    #
-    # def generate_icon(self):
-    #     text_surface, text_rect = self.create_text_surface("Dark", pygame.font.Font(None, 37), themes.getGray())
-    #
-    #     self.screen.blit(text_surface, text_rect)
-    #
-    #     return 0
-    #
-    # def create_text_surface(self, text, font, color):
-    #     text_surface = font.render(text, True, color)
-    #     return text_surface, text_surface.get_rect()
-
-    # def clickAction(self, events):
-    #     if self.clickCheck(events):
-    #         self.toggleDarkMode()
-    #         print("Toggle: " + str(self.darkModeToggle))
-    #         return self.darkModeToggle
-
     def keyAction(self, keys):
         pass
 
