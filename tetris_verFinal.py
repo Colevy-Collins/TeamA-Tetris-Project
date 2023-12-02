@@ -75,20 +75,28 @@ def main():
     }
 
     #Button parameter creation
-    sizeValues = [40, 40, 40] # button sizeX, button sizeY, Icon Size
-    pausebuttonLocationX = 10
-    pausebuttonLocationY = 200
-    darkModeButtonLocationX = 10
-    darkModeButtonLocationY = 80
-    themeButtonLocationX = 10
-    themeButtonLocationY = 130
-    speedButtonLocationX = 315
-    speedButtonLocationY = 10
-    pauseIconButton = PauseIconButton(screen, (pausebuttonLocationX, pausebuttonLocationY), sizeValues, [(150, 150, 150), (255, 255, 255)])
-    darkModeButton = DarkModeButton(screen, "Light", (darkModeButtonLocationX , darkModeButtonLocationY), (60, 30), pygame.font.Font(None, 22), [themes.getWhite(), themes.getGray()])
-    themeButton = ThemeButton(screen, "Default", (themeButtonLocationX, themeButtonLocationY), (60, 30), pygame.font.Font(None, 16), [themes.getWhite(), themes.getGray()])
-    speedButton = SpeedButton(screen, difficulty.getDifficulty(), (speedButtonLocationX, speedButtonLocationY), (60, 30),
-                                    pygame.font.Font(None, 22), [themes.getBlue(), themes.getGray()])
+    
+    #Pause Button variable definition
+    pauseSizeValues, pausebuttonLocationX, pausebuttonLocationY, pauseIconColors = [40, 40, 40], 10, 200, [(150, 150, 150), (255, 255, 255)]
+
+    #Dark Mode button variable definition
+    darkModeButtonLocationX, darkModeButtonLocationY, darkModeSize, darkModeColors = 10, 80, (60, 30), [themes.getWhite(), themes.getGray()]
+
+    #Theme Button variable definition
+    themeButtonLocationX, themeButtonLocationY, themeButtonSize, themeButtonColor = 10, 130, (60, 30), [themes.getWhite(), themes.getGray()]
+
+    #Speed Button variable definition
+    speedButtonLocationX, speedButtonLocationY, speedButtonSize, speedButtonColor = 315, 10, (60, 30), [themes.getBlue(), themes.getGray()]
+
+
+    #constructing of variable classes
+    pauseIconButton = PauseIconButton(screen, (pausebuttonLocationX, pausebuttonLocationY), pauseSizeValues, pauseIconColors)
+    
+    darkModeButton = DarkModeButton(screen, "Light", (darkModeButtonLocationX , darkModeButtonLocationY), darkModeSize, pygame.font.Font(None, 22), darkModeColors)
+    
+    themeButton = ThemeButton(screen, "Default", (themeButtonLocationX, themeButtonLocationY), themeButtonSize, pygame.font.Font(None, 16), themeButtonColor)
+    
+    speedButton = SpeedButton(screen, difficulty.getDifficulty(), (speedButtonLocationX, speedButtonLocationY), speedButtonSize, pygame.font.Font(None, 22), speedButtonColor)
 
     end_game_menu = EndGameMenu(board_manager)
     menu = TetrisStartMenu()

@@ -22,19 +22,21 @@ class EndGameMenu(DefaultUI):
                     sys.exit()
                 self.buttonHandle(events)
 
-            # Set Background
-            self.screen.fill(self.BLACK)
-
             # Draw Score
+            self.drawBackground()
             self.draw_score(self.screen)
             self.draw_high_score(self.screen)
 
-            # Draw Buttons and Title
+            # Draw Buttons, Title and Background
             self.drawButton()
             self.drawTitle()
 
             # Update Screen
             pygame.display.flip()
+
+    def drawBackground(self):
+        # Set Background
+        self.screen.fill(self.BLACK)
 
     def draw_score(self, screen):
         font = pygame.font.SysFont('Calibri', 25, True, False)

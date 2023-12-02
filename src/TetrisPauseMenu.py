@@ -25,15 +25,17 @@ class PausedMenu(DefaultUI):
                     sys.exit()
                 self.buttonHandle(events)
 
-            # Set Background
-            self.screen.fill(self.BLACK)
-
-            # Draw Buttons and Title
+            # Draw Buttons Title and Background
+            self.drawBackground()
             self.drawButton()
             self.drawTitle()
 
             # Update Screen
             pygame.display.flip()
+
+    def drawBackground(self):
+        # Set Background
+        self.screen.fill(self.BLACK)
 
     def drawButton(self):
         # Draw buttons
