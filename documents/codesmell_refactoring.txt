@@ -2,3 +2,5 @@
     - In TetrisStartMenu, TetrisPauseMenu and TetrisEndMenu the initialize functions were violating the SRP principle by calling the function components of the UI as well as customly creating the the background and then applying it. To fix this SRP violation, a drawBackground function was created to minimize responsiblities.
 2) Magic Numbers
     - In tetris_verFinal.py the construction of the game buttons used many magic number not even hinting what they were for. This was fixed by declaring the variable first and then passing it to the call of the classes.
+3) Duplicate Code
+    - There was 2 version of the Button class which creates the Duplicate code, code smell. This was refactored by removing one of the button classes and all calls to that class.
