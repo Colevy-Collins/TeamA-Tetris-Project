@@ -1,6 +1,28 @@
-1) SRP Violation
-    - In TetrisStartMenu, TetrisPauseMenu and TetrisEndMenu the initialize functions were violating the SRP principle by calling the function components of the UI as well as customly creating the the background and then applying it. To fix this SRP violation, a drawBackground function was created to minimize responsiblities.
-2) Magic Numbers
-    - In tetris_verFinal.py the construction of the game buttons used many magic number not even hinting what they were for. This was fixed by declaring the variable first and then passing it to the call of the classes.
-3) Duplicate Code
-    - There was 2 version of the Button class which creates the Duplicate code, code smell. This was refactored by removing one of the button classes and all calls to that class.
+Code smell / Refactor 1:
+Date Found: 12/2/23
+Code smell: SRP Violation
+    - In TetrisStartMenu, TetrisPauseMenu and TetrisEndMenu the initialize functions were violating the SRP principle by calling the function components of the UI as well as customly creating the the background and then applying it. 
+Refactor: Extract Method
+    - To fix this SRP violation, a drawBackground function was created to minimize responsiblities of the intialize function.
+Location in Source Tree of Refactor:
+    - TeamA-Tetris-Project > src > TetrisStartMenu.py
+    - TeamA-Tetris-Project > src > TetrisPauseMenu.py
+    - TeamA-Tetris-Project > src > TetrisEndMenu.py
+
+Code smell / Refactor 2:
+Date Found: 12/2/23
+Code smell: Magic Numbers
+ - In tetris_verFinal.py the construction of the game buttons used many magic number not even hinting what they were for.
+Refactor: Replace magic Number with Symbolic Variable
+    - This was fixed by declaring the variable first and then passing it to the call of the classes.
+Location in Source Tree of Refactor:
+    - TeamA-Tetris-Project > tetris_verFinal.py
+
+Code smell / Refactor 3:
+Date Found: 12/2/23
+Code smell: Duplicate Code
+ - There are 2 version of the Button class which creates the Duplicate code, code smell.
+Refactor: Remove Duplicate Code
+    - This was refactored by removing one of the button classes and all calls to that class.
+Location in Source Tree of Refactor:
+    - TeamA-Tetris-Project > src > Button.py
