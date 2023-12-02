@@ -1,5 +1,4 @@
 from src.PygameDelegate import PygameDelegate
-from src.Button import Button
 from src.TetrisBoard import TetrisBoard
 from src.TetrisBlock import TetrisBlock
 from src.TetrisBoardManager import BoardManager
